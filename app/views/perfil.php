@@ -25,9 +25,13 @@ $user = $_SESSION['usuario'];
             <p><strong>Correo Electrónico:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
             <p><strong>Rol:</strong> <?php echo htmlspecialchars($user['rol']); ?></p>
         </div>
-        <div class="actions">
+    <div class="actions">
+        <?php if ($user['rol'] === 'vendedor'): ?>
+            <a href="panel_vendedor.php" class="btn-primary">Publicar Producto</a>
+        <?php else: ?>
             <button id="montarPuestoBtn" class="btn-primary">Montar Puesto</button>
-        </div>
+        <?php endif; ?>
+    </div>
     </div>
 
     <!-- Modal -->
