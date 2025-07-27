@@ -1,0 +1,123 @@
+/* Navbar styles */
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background-color: #004085;
+    padding: 0.5rem 0;
+    color: white;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* Navigation links */
+.nav a {
+    background-color: #004085;
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.nav a:hover {
+    color: white;
+    background-color: #002752;
+}
+
+/* User info container */
+.user-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+/* Hamburger menu button */
+.nav-toggle {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #004085;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        padding: 1rem 0;
+        border-radius: 0 0 8px 8px;
+        z-index: 1001;
+        overflow-y: auto;
+        max-height: calc(100vh - 60px);
+    }
+
+    .nav a {
+        padding: 1rem 2rem;
+        border-radius: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav.nav-menu_visible {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        flex-direction: row;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    .user-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+}
