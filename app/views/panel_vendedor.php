@@ -37,7 +37,7 @@ $user = $_SESSION['usuario'];
                         <tr>
                             <td><?php echo htmlspecialchars($producto['nombre']); ?></td>
                             <td><?php echo htmlspecialchars($producto['descripcion']); ?></td>
-                            <td><?php echo number_format($producto['precio'], 2); ?> €</td>
+                            <td>$<?php echo number_format($producto['precio'], 2); ?></td>
                             <td><?php echo intval($producto['disponibles']); ?></td>
                             <td><?php echo htmlspecialchars($producto['categoria']); ?></td>
                             <td>

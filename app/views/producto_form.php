@@ -37,7 +37,16 @@ $formAction = $isEdit ? '../controllers/ProductoController.php?action=actualizar
             <input type="number" id="disponibles" name="disponibles" min="0" value="<?php echo $isEdit ? intval($producto['disponibles']) : '0'; ?>" />
 
             <label for="categoria">Categoría:</label>
-            <input type="text" id="categoria" name="categoria" value="<?php echo $isEdit ? htmlspecialchars($producto['categoria']) : 'Otros'; ?>" />
+            <select id="categoria" name="categoria">
+                <?php
+                $categorias = ['Accesorio', 'Libros y Papelería', 'Mascotas', 'Juguetes', 'Ropa y Moda', 'Salud y Belleza', 'Otros'];
+                $selectedCategoria = $isEdit ? $producto['categoria'] : 'Otros';
+                foreach ($categorias as $categoria) {
+                    $selected = ($categoria === $selectedCategoria) ? 'selected' : '';
+                    echo "<option value=\"" . htmlspecialchars($categoria) . "\" $selected>" . htmlspecialchars($categoria) . "</option>";
+                }
+                ?>
+            </select>
 
             <label for="imagen">Imagen:</label>
             <?php if ($isEdit && !empty($producto['imagen'])): ?>

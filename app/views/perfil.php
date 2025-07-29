@@ -30,7 +30,7 @@ $user = $_SESSION['usuario'];
         </div>
     <div class="actions">
         <?php if ($user['rol'] === 'vendedor'): ?>
-            <a href="panel_vendedor.php" class="btn-primary">Publicar Producto</a>
+            <a href="../controllers/ProductoController.php" class="btn-primary">Publicar Producto</a>
         <?php else: ?>
             <button id="montarPuestoBtn" class="btn-primary">Montar Puesto</button>
         <?php endif; ?>

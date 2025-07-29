@@ -36,7 +36,8 @@ body {
 .product-form-container input[type="text"],
 .product-form-container input[type="number"],
 .product-form-container textarea,
-.product-form-container input[type="file"] {
+.product-form-container input[type="file"],
+.product-form-container select {
     padding: 10px;
     margin-bottom: 18px;
     border: 1px solid #ced4da;

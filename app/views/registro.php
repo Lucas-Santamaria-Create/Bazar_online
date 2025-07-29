@@ -51,6 +51,6 @@ unset($_SESSION['error'], $_SESSION['success']);
 
         <button type="submit">Registrarse</button>
     </form>
-    <button type="button" onclick="window.location.href='/index.php';" class="btn-regresar">Regresar</button>
+    <button type="button" onclick="window.location.href='/Bazar_online/index.php';" class="btn-regresar">Regresar</button>
 </body>
 </html>

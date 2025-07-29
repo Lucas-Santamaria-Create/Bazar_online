@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 require_once '../models/Producto.php';
 
-$action = $_GET['action'] ?? '';
+$action = $_GET['action'] ?? 'listar';
 $productoModel = new Producto();
 
 if (!isset($_SESSION['usuario'])) {
@@ -14,7 +14,8 @@ if (!isset($_SESSION['usuario'])) {
 
 $id_usuario = $_SESSION['usuario']['id_usuario'];
 
-function redirectWithMessage($location, $type, $message) {
+function redirectWithMessage($location, $type, $message)
+{
     $_SESSION[$type] = $message;
     header("Location: $location");
     exit();
@@ -22,7 +23,7 @@ function redirectWithMessage($location, $type, $message) {
 
 switch ($action) {
     case 'listar':
-        // List products for the logged-in user
+        // Listar productos para el usuario 
         $productos = $productoModel->obtenerPorUsuario($id_usuario);
         include '../views/panel_vendedor.php';
         break;
@@ -35,16 +36,32 @@ switch ($action) {
             $disponibles = intval($_POST['disponibles'] ?? 0);
             $categoria = trim($_POST['categoria'] ?? 'Otros');
 
-            // Handle image upload
+            // Subir imagen a uploads
             $imagen = 'default.jpg';
+
             if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-                $uploadDir = '../public/uploads/';
+                $uploadDir = __DIR__ . '/../../public/uploads/';
                 $tmpName = $_FILES['imagen']['tmp_name'];
-                $fileName = basename($_FILES['imagen']['name']);
-                $targetFile = $uploadDir . $fileName;
-                if (move_uploaded_file($tmpName, $targetFile)) {
-                    $imagen = $fileName;
+                $originalName = basename($_FILES['imagen']['name']);
+                $extension = pathinfo($originalName, PATHINFO_EXTENSION);
+
+                // Asegúrate de que la extensión sea válida (seguridad básica)
+                $extPermitidas = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                if (!in_array(strtolower($extension), $extPermitidas)) {
+                    redirectWithMessage('../controllers/ProductoController.php?action=crear', 'error', 'Formato de imagen no permitido.');
                 }
+
+                // Nombre único para evitar sobrescribir imágenes
+                $nuevoNombre = uniqid('img_', true) . '.' . $extension;
+                $targetFile = $uploadDir . $nuevoNombre;
+
+                if (move_uploaded_file($tmpName, $targetFile)) {
+                    $imagen = $nuevoNombre;
+                } else {
+                    redirectWithMessage('../controllers/ProductoController.php?action=crear', 'error', 'Error al subir la imagen.');
+                }
+            } elseif (isset($_FILES['imagen']) && $_FILES['imagen']['error'] !== UPLOAD_ERR_NO_FILE) {
+                redirectWithMessage('../controllers/ProductoController.php?action=crear', 'error', 'Error al subir la imagen.');
             }
 
             $productoModel->crear($id_usuario, $nombre, $descripcion, $precio, $imagen, $disponibles, $categoria);
@@ -77,15 +94,21 @@ switch ($action) {
                 redirectWithMessage('../controllers/ProductoController.php?action=listar', 'error', 'Producto no encontrado o acceso denegado.');
             }
 
-            $imagen = $producto['imagen'];
+            $imagen = $producto['imagen']; // conservar imagen actual si no se sube nueva
             if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-                $uploadDir = '../public/uploads/';
+                $uploadDir = __DIR__ . '/../../public/uploads/';
                 $tmpName = $_FILES['imagen']['tmp_name'];
-                $fileName = basename($_FILES['imagen']['name']);
-                $targetFile = $uploadDir . $fileName;
+                $extension = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
+                $uniqueName = uniqid('img_', true) . '.' . $extension;
+                $targetFile = $uploadDir . $uniqueName;
+
                 if (move_uploaded_file($tmpName, $targetFile)) {
-                    $imagen = $fileName;
+                    $imagen = $uniqueName;
+                } else {
+                    redirectWithMessage('../controllers/ProductoController.php?action=editar&id=' . $id_producto, 'error', 'Error al subir la imagen.');
                 }
+            } elseif (isset($_FILES['imagen']) && $_FILES['imagen']['error'] !== UPLOAD_ERR_NO_FILE) {
+                redirectWithMessage('../controllers/ProductoController.php?action=editar&id=' . $id_producto, 'error', 'Error al subir la imagen.');
             }
 
             $productoModel->actualizar($id_producto, $nombre, $descripcion, $precio, $imagen, $disponibles, $categoria);
@@ -99,6 +122,14 @@ switch ($action) {
         if (!$producto || $producto['id_usuario'] != $id_usuario) {
             redirectWithMessage('../controllers/ProductoController.php?action=listar', 'error', 'Producto no encontrado o acceso denegado.');
         }
+        $imagen = $producto['imagen'];
+        if ($imagen !== 'default.jpg') {
+            $uploadDir = __DIR__ . '/../../public/uploads/';
+            $imagePath = $uploadDir . $imagen;
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
         $productoModel->eliminar($id_producto);
         redirectWithMessage('../controllers/ProductoController.php?action=listar', 'success', 'Producto eliminado correctamente.');
         break;
@@ -107,4 +138,3 @@ switch ($action) {
         header('Location: ../views/perfil.php');
         exit();
 }
-?>

@@ -69,9 +69,6 @@ body {
     color: #ff9900;
 }
 
-.user-info a {
-    color: #fff;
-}
 
 /* Responsive */
 @media (max-width: 768px) {

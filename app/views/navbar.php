@@ -28,10 +28,8 @@ function getUserName()
                 <a href="\Bazar_online\app\views\login.php">Iniciar Sesión</a>
                 <a href="\Bazar_online\app\views\registro.php">Registrarse</a>
             <?php else: ?>
-                <div class="user-info">
-                    <a href="\Bazar_online\app\views\perfil.php">Perfil</a>
-                    <a href="\Bazar_online\logout.php">Cerrar Sesión</a>
-                </div>
+                <a href="\Bazar_online\app\views\perfil.php">Perfil</a>
+                <a href="\Bazar_online\logout.php">Cerrar Sesión</a>
             <?php endif; ?>
         </div>
     </nav>
