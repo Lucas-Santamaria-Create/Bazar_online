@@ -1,30 +1,68 @@
+<?php
+require_once 'app/models/Producto.php';
 
+// Ruteo: si se pide ver el detalle de un producto
+if (isset($_GET['r']) && $_GET['r'] === 'detalle') {
+    $id = $_GET['id'] ?? null;
+
+    if ($id) {
+        $productoModel = new Producto();
+        $producto = $productoModel->obtenerPorId($id);
+
+        if ($producto):
+?>
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bazar Online</title>
-    <link rel="stylesheet" href="public/css/index.css">
+    <title><?= htmlspecialchars($producto['nombre']) ?> - Detalles</title>
+    <link rel="stylesheet" href="public/css/detalle.css"> <!-- si tienes uno -->
 </head>
-
 <body>
-    <!-- Header -->
+    <?php include_once 'app/views/navbar.php'; ?>
+    <main class="detalle-container">
+        <h1><?= htmlspecialchars($producto['nombre']) ?></h1>
+        <img src="public/img/<?= htmlspecialchars($producto['imagen']) ?>" alt="<?= htmlspecialchars($producto['nombre']) ?>" width="300">
+        <p><strong>Precio:</strong> $<?= number_format($producto['precio'], 2) ?></p>
+        <p><strong>Categoría:</strong> <?= htmlspecialchars($producto['categoria']) ?></p>
+        <p><strong>Descripción:</strong> <?= nl2br(htmlspecialchars($producto['descripcion'])) ?></p>
+        <p><strong>Vendedor:</strong> <?= htmlspecialchars($producto['vendedor']) ?></p>
+        <a href="index.php" class="btn-primary">Volver al Catálogo</a>
+    </main>
+</body>
+</html>
+<?php
+        else:
+            echo "<p>Producto no encontrado.</p>";
+        endif;
+    } else {
+        echo "<p>Falta el ID del producto.</p>";
+    }
+
+    exit; // No continúa con el catálogo
+}
+
+// Si NO es un detalle, sigue el catálogo normal
+$buscar = $_GET['buscar'] ?? '';
+$categoria = $_GET['categoria'] ?? '';
+
+$productoModel = new Producto();
+$productos = $productoModel->obtenerTodos($buscar, $categoria);
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bazar Online - Inicio</title>
+    <link rel="stylesheet" href="public/css/index.css" />
+</head>
+<body>
     <?php include_once 'app/views/navbar.php'; ?>
 
-    <script>
-        const navToggle = document.getElementById('nav-toggle');
-        const navMenu = document.getElementById('nav-menu');
-
-        navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('nav-menu_visible');
-        });
-    </script>
-
-    <!-- Main -->
     <main>
-        <!-- Bienvenida -->
         <section class="welcome">
             <h1>Bienvenido a Bazar Online</h1>
             <p>Encuentra los mejores productos al mejor precio.</p>
@@ -33,36 +71,45 @@
             <?php endif; ?>
         </section>
 
-        <!-- Barra de búsqueda -->
         <section class="search-bar">
-            <form method="GET" action="catalogo.php">
-                <input type="text" name="buscar" placeholder="Buscar por nombre..." required />
+            <form method="GET" action="index.php">
+                <input
+                    type="text"
+                    name="buscar"
+                    placeholder="Buscar por nombre..."
+                    value="<?= htmlspecialchars($buscar) ?>"
+                />
+                <select name="categoria">
+                    <option value="">Todas las categorías</option>
+                    <option value="Accesorio" <?= ($categoria === 'Accesorio') ? 'selected' : '' ?>>Accesorio</option>
+                    <option value="Libros y Papelería" <?= ($categoria === 'Libros y Papelería') ? 'selected' : '' ?>>Libros y Papelería</option>
+                    <option value="Mascotas" <?= ($categoria === 'Mascotas') ? 'selected' : '' ?>>Mascotas</option>
+                    <option value="Juguetes" <?= ($categoria === 'Juguetes') ? 'selected' : '' ?>>Juguetes</option>
+                    <option value="Ropa y Moda" <?= ($categoria === 'Ropa y Moda') ? 'selected' : '' ?>>Ropa y Moda</option>
+                    <option value="Salud y Belleza" <?= ($categoria === 'Salud y Belleza') ? 'selected' : '' ?>>Salud y Belleza</option>
+                    <option value="Otros" <?= ($categoria === 'Otros') ? 'selected' : '' ?>>Otros</option>
+                </select>
                 <button type="submit">Buscar</button>
             </form>
         </section>
 
-        <!-- Catálogo de productos ejemplo -->
-        <!-- este codgo debe debe ser eliminado -->
         <section class="product-grid">
-            <?php
-            $productos = [
-                ['imagen' => 'public/img/producto1.jpg', 'nombre' => 'Producto 1', 'precio' => '10.00'],
-                ['imagen' => 'public/img/producto2.jpg', 'nombre' => 'Producto 2', 'precio' => '20.00'],
-                ['imagen' => 'public/img/producto3.jpg', 'nombre' => 'Producto 3', 'precio' => '30.00'],
-                ['imagen' => 'public/img/producto4.jpg', 'nombre' => 'Producto 4', 'precio' => '40.00'],
-                ['imagen' => 'public/img/producto5.jpg', 'nombre' => 'Producto 5', 'precio' => '50.00'],
-                ['imagen' => 'public/img/producto6.jpg', 'nombre' => 'Producto 6', 'precio' => '60.00'],
-            ];
-
-            foreach ($productos as $producto): ?>
-                <div class="product-card">
-                    <img src="<?php echo htmlspecialchars($producto['imagen']); ?>"
-                        alt="<?php echo htmlspecialchars($producto['nombre']); ?>" />
-                    <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
-                    <p>$<?php echo htmlspecialchars($producto['precio']); ?></p>
-                    <a href="detalle_producto.php?nombre=<?php echo urlencode($producto['nombre']); ?>" class="btn-secondary">Ver más</a>
-                </div>
-            <?php endforeach; ?>
+            <?php if (empty($productos)): ?>
+                <p>No hay productos publicados aún.</p>
+            <?php else: ?>
+                <?php foreach ($productos as $producto): ?>
+                    <div class="product-card">
+                        <img
+                            src="public/img/<?= htmlspecialchars($producto['imagen']) ?>"
+                            alt="<?= htmlspecialchars($producto['nombre']) ?>"
+                        />
+                        <h3><?= htmlspecialchars($producto['nombre']) ?></h3>
+                        <p>$<?= number_format($producto['precio'], 2) ?></p>
+                        <small>Vendedor: <?= htmlspecialchars($producto['vendedor']) ?></small><br />
+                        <a href="index.php?r=detalle&id=<?= $producto['id_producto'] ?>" class="btn-secondary">Ver más</a>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </section>
 
         <?php if (isLoggedIn()): ?>
@@ -72,15 +119,19 @@
         <?php endif; ?>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-links">
             <a href="contacto.php">Contacto</a> |
             <a href="redes.php">Redes Sociales</a> |
             <a href="terminos.php">Términos de Uso</a>
         </div>
-        <div>&copy; <?php echo date('Y'); ?> Bazar Online</div>
+        <div>&copy; <?= date('Y') ?> Bazar Online</div>
     </footer>
-</body>
 
+    <script>
+    document.querySelector('select[name="categoria"]').addEventListener('change', function() {
+        this.form.submit();
+    });
+    </script>
+</body>
 </html>

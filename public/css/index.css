@@ -428,3 +428,69 @@ main {
         gap: 0.25rem;
     }
 }
+select[name="categoria"] {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0 5px 5px 0;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+    /* Para que combine bien con el input y botón, ajusta el ancho si quieres */
+    min-width: 180px;
+}
+
+select[name="categoria"]:focus {
+    border-color: #004085;
+    box-shadow: 0 0 5px rgba(0, 64, 133, 0.5);
+}
+.search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.search-form input[type="text"] {
+    flex: 1 1 300px; /* El input toma todo el ancho disponible */
+    border-radius: 5px 0 0 5px;
+    border: 1px solid #ccc;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    outline: none;
+}
+
+.search-form button {
+    border-radius: 0 5px 5px 0;
+    border: none;
+    background-color: #004085;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.search-form button:hover {
+    background-color: #002752;
+}
+
+.search-form select[name="categoria"] {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+    min-width: 180px;
+}
+
+.search-form select[name="categoria"]:focus {
+    border-color: #004085;
+    box-shadow: 0 0 5px rgba(0, 64, 133, 0.5);
+}
+
+
