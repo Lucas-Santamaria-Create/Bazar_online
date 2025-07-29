@@ -1,14 +1,28 @@
 <?php
- if (isLoggedIn()): ?>
-    <form method="POST" action="reservar.php">
-        <input type="hidden" name="id_producto" value="<?= htmlspecialchars($producto['id_producto']) ?>" />
-        <button type="submit" class="btn-primary">Reservar</button>
-    </form>
-<?php else: ?>
-    <p><a href="login.php">Inicia sesión</a> para poder reservar este producto.</p>
-<?php endif; 
+session_start();
+
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+function isLoggedIn() {
+    return isset($_SESSION['usuario']);
+}
+
+function puedeReservar() {
+    if (!isLoggedIn()) return false;
+    $rol = $_SESSION['usuario']['rol'] ?? '';
+    return in_array($rol, ['comprador', 'vendedor']);
+}
 ?>
 
+
+
+
+
+<?php
+// Ya definido arriba: isLoggedIn() y puedeReservar()
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -28,9 +42,20 @@
         <p><strong>Disponibles:</strong> <?= (int)$producto['disponibles'] ?></p>
         <p><strong>Vendedor:</strong> <?= htmlspecialchars($producto['vendedor']) ?></p>
 
-        <!-- Aquí puedes agregar sección para calificaciones, botón reservar, favoritos, etc. -->
+        <?php if (puedeReservar()): ?>
+            <form method="POST" action="reservar.php">
+                <input type="hidden" name="id_producto" value="<?= (int)$producto['id_producto'] ?>" />
+                <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>" />
+                <button type="submit" class="btn-primary">Reservar</button>
+            </form>
+        <?php elseif (isLoggedIn()): ?>
+            <p>Tu rol no permite reservar productos.</p>
+        <?php else: ?>
+            <p><a href="login.php">Inicia sesión</a> para reservar este producto.</p>
+        <?php endif; ?>
 
-        <a href="catalogo.php">Volver al catálogo</a>
+        <a href="catalogo.php" class="btn-secondary">Volver al catálogo</a>
     </main>
 </body>
 </html>
+

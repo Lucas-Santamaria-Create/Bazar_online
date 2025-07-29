@@ -2,15 +2,35 @@
 session_start(); // Para manejar sesión y $_SESSION['usuario']
 
 require_once 'app/models/Producto.php';
-require_once 'app/models/Reserva.php';
+//require_once 'app/models/Reserva.php';
+
+
+// Generar token CSRF si no existe
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 // Función auxiliar para verificar sesión iniciada
 function isLoggedIn() {
     return isset($_SESSION['usuario']);
 }
 
+// Función auxiliar para validar rol (ejemplo: comprador, vendedor, admin)
+function hasRole($rolNecesario) {
+    return isLoggedIn() && isset($_SESSION['usuario']['rol']) && $_SESSION['usuario']['rol'] === $rolNecesario;
+}
+
+// Sanitizar entradas GET
+$buscar = filter_input(INPUT_GET, 'buscar', FILTER_SANITIZE_SPECIAL_CHARS) ?? '';
+$categoria = filter_input(INPUT_GET, 'categoria', FILTER_SANITIZE_SPECIAL_CHARS) ?? '';
+
 // Procesar reserva si se envía un POST con id_producto
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_producto'])) {
+    // Validar token CSRF
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("Error: Token CSRF inválido.");
+    }
+
     if (!isLoggedIn()) {
         // Si no está logueado, redirigir a login
         header('Location: login.php');
@@ -84,10 +104,16 @@ if (isset($_GET['r']) && $_GET['r'] === 'detalle') {
             <p><strong>Vendedor:</strong> <?= htmlspecialchars($producto['vendedor']) ?></p>
 
             <?php if (isLoggedIn()): ?>
-                <form method="POST" action="index.php">
-                    <input type="hidden" name="id_producto" value="<?= htmlspecialchars($producto['id_producto']) ?>" />
-                    <button type="submit" class="btn-primary">Reservar</button>
-                </form>
+                <!-- Mostrar botón de reservar sólo para usuarios con rol comprador -->
+                <?php if (hasRole('comprador')): ?>
+                    <form method="POST" action="index.php">
+                        <input type="hidden" name="id_producto" value="<?= htmlspecialchars($producto['id_producto']) ?>" />
+                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>" />
+                        <button type="submit" class="btn-primary">Reservar</button>
+                    </form>
+                <?php else: ?>
+                    <p>No tienes permisos para reservar productos.</p>
+                <?php endif; ?>
             <?php else: ?>
                 <p><a href="login.php">Inicia sesión</a> para poder reservar este producto.</p>
             <?php endif; ?>
@@ -107,10 +133,7 @@ if (isset($_GET['r']) && $_GET['r'] === 'detalle') {
     exit; // No continúa con el catálogo
 }
 
-// Si NO es detalle ni reserva, mostrar catálogo normal
-$buscar = $_GET['buscar'] ?? '';
-$categoria = $_GET['categoria'] ?? '';
-
+// Mostrar catálogo normal
 $productoModel = new Producto();
 $productos = $productoModel->obtenerTodos($buscar, $categoria);
 ?>
@@ -176,7 +199,7 @@ $productos = $productoModel->obtenerTodos($buscar, $categoria);
             <?php endif; ?>
         </section>
 
-        <?php if (isLoggedIn()): ?>
+        <?php if (isLoggedIn() && hasRole('vendedor')): ?>
             <div class="publicar-container">
                 <a href="publicar_producto.php" class="btn-primary">Publicar Producto</a>
             </div>
@@ -193,6 +216,7 @@ $productos = $productoModel->obtenerTodos($buscar, $categoria);
     </footer>
 
     <script>
+    // Enviar formulario cuando cambie categoría para facilitar la búsqueda rápida
     document.querySelector('select[name="categoria"]').addEventListener('change', function() {
         this.form.submit();
     });
