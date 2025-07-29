@@ -6,7 +6,8 @@ require_once '../models/Usuario.php'; // Incluye el modelo Usuario para interact
 $action = $_GET['action'] ?? '';
 
 // Función para redirigir con un mensaje en la sesión (error o éxito)
-function redirectWithMessage($location, $type, $message) {
+function redirectWithMessage($location, $type, $message)
+{
     $_SESSION[$type] = $message;
     header("Location: $location");
     exit();
@@ -45,6 +46,10 @@ if ($action === 'login') {
                 'email' => $user['email'],
                 'rol' => $user['rol']
             ];
+            // Set cookie for last login date, expires in 30 days
+            date_default_timezone_set('America/Panama');
+            setcookie('last_login', date('Y-m-d h:i A'), time() + (30 * 24 * 60 * 60), "/");
+
             header('Location: ../../index.php'); // Redirige al inicio
             exit();
         } else {
@@ -53,7 +58,7 @@ if ($action === 'login') {
         }
     }
 
-/* ============================
+    /* ============================
    REGISTRO
    ============================ */
 } elseif ($action === 'registro') {
@@ -101,7 +106,7 @@ if ($action === 'login') {
         exit();
     }
 
-/* ============================
+    /* ============================
    LOGOUT
    ============================ */
 } elseif ($action === 'logout') {
@@ -111,7 +116,7 @@ if ($action === 'login') {
     header('Location: ../views/login.php');
     exit();
 
-/* ============================
+    /* ============================
    CONVERTIR A VENDEDOR
    ============================ */
 } elseif ($action === 'convertirVendedor') {
@@ -153,11 +158,10 @@ if ($action === 'login') {
         exit();
     }
 
-/* ============================
+    /* ============================
    DEFAULT (redirige al login)
    ============================ */
 } else {
     header('Location: ../views/login.php');
     exit();
 }
-?>

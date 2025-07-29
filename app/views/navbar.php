@@ -1,6 +1,7 @@
 <?php
-session_start();
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // Funciones de sesión
 function isLoggedIn()
 {
@@ -15,11 +16,11 @@ function getUserName()
 
 <link rel="stylesheet" href="/Bazar_online/public/css/navbar.css" />
 <header class="header">
-    <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú de navegación">
-        &#9776;
-    </button>
     <nav class="nav" id="nav-menu">
         <div class="logo">Bazar Online</div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú de navegación">
+            &#9776;
+        </button>
         <div class="nav-links">
             <a href="\Bazar_online\index.php">Inicio</a>
             <a href="\Bazar_online\app\views\catalogo.php">Catálogo</a>
@@ -27,14 +28,13 @@ function getUserName()
                 <a href="\Bazar_online\app\views\login.php">Iniciar Sesión</a>
                 <a href="\Bazar_online\app\views\registro.php">Registrarse</a>
             <?php else: ?>
-                <div class="user-info">
-                    <a href="\Bazar_online\app\views\perfil.php">Perfil</a>
-                    <a href="\Bazar_online\logout.php">Cerrar Sesión</a>
-                </div>
+                <a href="\Bazar_online\app\views\perfil.php">Perfil</a>
+                <a href="\Bazar_online\logout.php">Cerrar Sesión</a>
             <?php endif; ?>
         </div>
     </nav>
 </header>
+
 
 <script>
     const navToggle = document.getElementById('nav-toggle');

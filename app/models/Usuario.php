@@ -18,11 +18,10 @@ class Usuario {
     public function crear($nombre, $email, $password, $rol = 'comprador') {
         $sql = "INSERT INTO usuarios (nombre, email, password, rol) VALUES (:nombre, :email, :password, :rol)";
         $stmt = $this->pdo->prepare($sql);
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         return $stmt->execute([
             ':nombre' => $nombre,
             ':email' => $email,
-            ':password' => $hashed_password,
+            ':password' => $password,
             ':rol' => $rol
         ]);
     }
