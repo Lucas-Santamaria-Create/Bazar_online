@@ -24,6 +24,9 @@ $user = $_SESSION['usuario'];
             <p><strong>Nombre:</strong> <?php echo htmlspecialchars($user['nombre']); ?></p>
             <p><strong>Correo Electrónico:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
             <p><strong>Rol:</strong> <?php echo htmlspecialchars($user['rol']); ?></p>
+            <?php if (isset($_COOKIE['last_login'])): ?>
+                <p><strong>Último inicio de sesión:</strong> <?php echo htmlspecialchars($_COOKIE['last_login']); ?></p>
+            <?php endif; ?>
         </div>
     <div class="actions">
         <?php if ($user['rol'] === 'vendedor'): ?>

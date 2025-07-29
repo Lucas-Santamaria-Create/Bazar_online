@@ -45,6 +45,9 @@ if ($action === 'login') {
                 'email' => $user['email'],
                 'rol' => $user['rol']
             ];
+            // Set cookie for last login date, expires in 30 days
+            date_default_timezone_set('America/Panama');
+            setcookie('last_login', date('Y-m-d H:i:s'), time() + (30 * 24 * 60 * 60), "/");
             header('Location: ../../index.php'); // Redirige al inicio
             exit();
         } else {

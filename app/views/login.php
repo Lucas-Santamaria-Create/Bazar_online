@@ -29,7 +29,7 @@ if (isset($_SESSION['error'])) {
             <button type="submit">Entrar</button>
         </form>
         <p>¿No tienes cuenta? <a href="registro.php">Regístrate aquí</a></p>
-        <button type="button" onclick="window.location.href='index.php';" class="btn-regresar">Regresar</button>
+        <button type="button" onclick="window.location.href='/index.php';" class="btn-regresar">Regresar</button>
     </div>
 </body>
 </html>
