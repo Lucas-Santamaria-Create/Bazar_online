@@ -40,6 +40,18 @@ class Reserva {
         return $stmt->fetchAll();
     }
 
+    public function obtenerPorVendedor($id_vendedor) {
+        $sql = "SELECT r.*, u.nombre as nombre_comprador, p.nombre as nombre_producto 
+                FROM reservas r
+                JOIN productos p ON r.id_producto = p.id_producto
+                JOIN usuarios u ON r.id_usuario = u.id_usuario
+                WHERE p.id_usuario = :id_vendedor
+                ORDER BY r.fecha_reserva DESC";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id_vendedor' => $id_vendedor]);
+        return $stmt->fetchAll();
+    }
+
     public function actualizar($id_reserva, $estado) {
         $sql = "UPDATE reservas SET estado = :estado WHERE id_reserva = :id_reserva";
         $stmt = $this->pdo->prepare($sql);

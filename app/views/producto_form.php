@@ -55,7 +55,7 @@ $formAction = $isEdit ? '../controllers/ProductoController.php?action=actualizar
             <input type="file" id="imagen" name="imagen" accept="image/*" />
 
             <button type="submit"><?php echo $isEdit ? 'Actualizar' : 'Crear'; ?></button>
-            <a href="../controllers/ProductoController.php?action=listar" class="btn-secondary">Cancelar</a>
+            <a href="../controllers/PanelVendedorController.php?action=productos" class="btn-secondary">Cancelar</a>
         </form>
     </div>
 </body>

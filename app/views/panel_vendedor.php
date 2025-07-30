@@ -19,6 +19,7 @@ $user = $_SESSION['usuario'];
         <h2>Panel de Vendedor</h2>
         <p>Bienvenido, <?php echo htmlspecialchars($user['nombre']); ?>. Aquí puedes gestionar tus productos.</p>
         <a href="../controllers/ProductoController.php?action=crear" class="btn-primary">Crear Nuevo Producto</a>
+        <a href="../controllers/PanelVendedorController.php?action=reservas" class="btn-primary" style="margin-left: 10px;">Ver Reservas Recibidas</a>
         <?php if (!empty($productos)): ?>
             <table class="product-table">
                 <thead>

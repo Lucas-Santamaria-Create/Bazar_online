@@ -22,12 +22,6 @@ function redirectWithMessage($location, $type, $message)
 }
 
 switch ($action) {
-    case 'listar':
-        // Listar productos para el usuario 
-        $productos = $productoModel->obtenerPorUsuario($id_usuario);
-        include '../views/panel_vendedor.php';
-        break;
-
     case 'crear':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nombre = trim($_POST['nombre'] ?? '');
