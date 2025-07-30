@@ -7,12 +7,16 @@ require_once '../models/Producto.php';
 $action = $_GET['action'] ?? 'listar';
 $productoModel = new Producto();
 
-if (!isset($_SESSION['usuario'])) {
+if (!in_array($action, ['catalogo', 'detalle']) && !isset($_SESSION['usuario'])) {
     header('Location: ../views/login.php');
     exit();
 }
 
-$id_usuario = $_SESSION['usuario']['id_usuario'];
+
+$id_usuario = null;
+if (isset($_SESSION['usuario'])) {
+    $id_usuario = $_SESSION['usuario']['id_usuario'];
+}
 
 function redirectWithMessage($location, $type, $message)
 {
@@ -133,6 +137,30 @@ switch ($action) {
         $productoModel->eliminar($id_producto);
         redirectWithMessage('../controllers/ProductoController.php?action=listar', 'success', 'Producto eliminado correctamente.');
         break;
+
+    case 'catalogo':
+    $buscar = $_GET['buscar'] ?? '';
+    $categoria = $_GET['categoria'] ?? '';
+    $productos = $productoModel->obtenerTodos($buscar, $categoria);
+    include '../views/catalogo.php';
+    break;
+        
+    case 'detalle':
+    if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+        die("Producto no válido.");
+    }
+
+    $id_producto = (int)$_GET['id'];
+    $producto = $productoModel->obtenerDetalleConVendedor($id_producto);
+
+    if (!$producto) {
+        die("Producto no encontrado.");
+    }
+
+    include '../views/detalle_producto.php';
+    break;
+
+
 
     default:
         header('Location: ../views/perfil.php');
