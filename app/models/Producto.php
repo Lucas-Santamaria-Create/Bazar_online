@@ -65,5 +65,42 @@ class Producto {
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([':id_producto' => $id_producto]);
     }
-}
+
+    public function obtenerTodos($buscar = '', $categoria = '')
+    {
+        $sql = "SELECT p.*, u.nombre AS vendedor 
+                FROM productos p
+                JOIN usuarios u ON p.id_usuario = u.id_usuario
+                WHERE 1=1";
+
+        $params = [];
+
+        if (!empty($buscar)) {
+            $sql .= " AND p.nombre LIKE :buscar";
+            $params[':buscar'] = '%' . $buscar . '%';
+        }
+
+        if (!empty($categoria)) {
+            $sql .= " AND p.categoria = :categoria";
+            $params[':categoria'] = $categoria;
+        }
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function obtenerDetalleConVendedor($id) {
+        $sql = "SELECT p.*, u.nombre AS vendedor
+                FROM productos p
+                JOIN usuarios u ON p.id_usuario = u.id_usuario
+                WHERE p.id_producto = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+
+    }
 ?>

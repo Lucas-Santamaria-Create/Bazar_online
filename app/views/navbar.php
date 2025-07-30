@@ -23,7 +23,7 @@ function getUserName()
         </button>
         <div class="nav-links">
             <a href="\Bazar_online\index.php">Inicio</a>
-            <a href="\Bazar_online\app\views\catalogo.php">Catálogo</a>
+            <a href="\Bazar_online\app\controllers\ProductoController.php?action=catalogo">Catálogo</a>
             <?php if (!isLoggedIn()): ?>
                 <a href="\Bazar_online\app\views\login.php">Iniciar Sesión</a>
                 <a href="\Bazar_online\app\views\registro.php">Registrarse</a>
