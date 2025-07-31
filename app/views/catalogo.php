@@ -45,7 +45,6 @@ if (!isset($productos)) {
                 <div class="product-card">
                     <img src="../../public/uploads/<?= htmlspecialchars($producto['imagen']) ?>" alt="<?= htmlspecialchars($producto['nombre']) ?>" />
                     <h2><?= htmlspecialchars($producto['nombre']) ?></h2>
-                    <p><?= htmlspecialchars($producto['descripcion']) ?></p>
                     <p><strong>Precio:</strong> $<?= number_format($producto['precio'], 2) ?></p>
                     <p><strong>Vendedor:</strong> <?= htmlspecialchars($producto['vendedor']) ?></p>
                     <p><strong>Disponibles:</strong> <?= (int)$producto['disponibles'] ?></p>

@@ -51,6 +51,27 @@ class Usuario {
         ]);
     }
 
+    public function actualizarConPassword($id_usuario, $nombre, $email, $password) {
+        $sql = "UPDATE usuarios SET nombre = :nombre, email = :email, password = :password WHERE id_usuario = :id_usuario";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':nombre' => $nombre,
+            ':email' => $email,
+            ':password' => $password,
+            ':id_usuario' => $id_usuario
+        ]);
+    }
+
+    public function actualizarSinPassword($id_usuario, $nombre, $email) {
+        $sql = "UPDATE usuarios SET nombre = :nombre, email = :email WHERE id_usuario = :id_usuario";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':nombre' => $nombre,
+            ':email' => $email,
+            ':id_usuario' => $id_usuario
+        ]);
+    }
+
     public function eliminar($id_usuario) {
         $sql = "DELETE FROM usuarios WHERE id_usuario = :id_usuario";
         $stmt = $this->pdo->prepare($sql);

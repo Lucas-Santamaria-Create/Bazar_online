@@ -37,6 +37,31 @@ if (isset($_SESSION['success'])) {
                 <p><strong>Último inicio de sesión:</strong> <?php echo htmlspecialchars($_COOKIE['last_login']); ?></p>
             <?php endif; ?>
         </div>
+
+        <!-- Formulario para editar datos -->
+        <h3>Editar Datos</h3>
+        <form method="POST" action="../controllers/UsuarioController.php?action=editar" class="edit-form">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($user['nombre']); ?>" required />
+
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required />
+
+            <label for="password">Nueva Contraseña (dejar vacío para no cambiar):</label>
+            <input type="password" id="password" name="password" />
+
+            <label for="confirm_password">Confirmar Nueva Contraseña:</label>
+            <input type="password" id="confirm_password" name="confirm_password" />
+
+            <button type="submit" class="btn-primary">Guardar Cambios</button>
+        </form>
+
+        <!-- Botón para eliminar cuenta -->
+        <h3>Eliminar Cuenta</h3>
+        <form method="POST" action="../controllers/UsuarioController.php?action=eliminar" onsubmit="return confirm('¿Estás seguro de eliminar tu cuenta? Esta acción no se puede deshacer.');">
+            <button type="submit" class="btn-danger">Eliminar Cuenta</button>
+        </form>
+
     <div class="actions">
         <?php if ($user['rol'] === 'vendedor'): ?>
             <a href="../controllers/PanelVendedorController.php" class="btn-primary">Publicar Producto</a>
