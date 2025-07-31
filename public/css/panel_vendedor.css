@@ -109,8 +109,13 @@ p {
 
 @media (max-width: 768px) {
     .seller-panel-container, main {
-        margin-top: 140px; /* Igual que el padding-top en body para móvil */
-        padding: 1rem; /* opcional, para separar contenido */
+        margin-top: 140px;
+        padding: 1rem;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
      .reservation-table {
         width: 100%;
@@ -126,6 +131,7 @@ p {
     .product-table, .product-table thead, .product-table tbody, .product-table th, .product-table td, .product-table tr {
         display: block;
         width: 100%;
+        z-index: 1;
     }
 
     .product-table thead tr {
@@ -161,5 +167,13 @@ p {
     .btn-primary, .btn-secondary, .btn-edit, .btn-delete {
         width: 100%;
         margin: 0.25rem 0;
+    }
+
+    .product-table {
+        margin: 0 auto;
+    }
+
+    .product-table td {
+        text-align: center;
     }
 }

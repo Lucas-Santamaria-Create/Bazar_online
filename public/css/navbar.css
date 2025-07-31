@@ -75,6 +75,7 @@ body {
     .nav {
         flex-wrap: wrap;
         align-items: flex-start;
+        z-index: 1000;
     }
 
     .nav-toggle {

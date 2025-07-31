@@ -8,19 +8,21 @@ $user = $_SESSION['usuario'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Panel de Vendedor - Bazar Online</title>
     <link rel="stylesheet" href="../../public/css/panel_vendedor.css" />
 </head>
+
 <body>
     <div class="seller-panel-container">
         <?php if (isset($_SESSION['success'])): ?>
             <div id="success-message" style="background-color: #d4edda; color: #155724; padding: 10px; margin-bottom: 15px; border: 1px solid #c3e6cb; border-radius: 4px;">
                 <?php
-                    echo htmlspecialchars($_SESSION['success']);
-                    unset($_SESSION['success']);
+                echo htmlspecialchars($_SESSION['success']);
+                unset($_SESSION['success']);
                 ?>
             </div>
             <script>
@@ -41,7 +43,6 @@ $user = $_SESSION['usuario'];
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Descripción</th>
                         <th>Precio</th>
                         <th>Disponibles</th>
                         <th>Categoría</th>
@@ -52,17 +53,16 @@ $user = $_SESSION['usuario'];
                 <tbody>
                     <?php foreach ($productos as $producto): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($producto['nombre']); ?></td>
-                            <td><?php echo htmlspecialchars($producto['descripcion']); ?></td>
-                            <td>$<?php echo number_format($producto['precio'], 2); ?></td>
-                            <td><?php echo intval($producto['disponibles']); ?></td>
-                            <td><?php echo htmlspecialchars($producto['categoria']); ?></td>
-                            <td>
+                            <td data-label="Nombre"><?php echo htmlspecialchars($producto['nombre']); ?></td>
+                            <td data-label="Precio">$<?php echo number_format($producto['precio'], 2); ?></td>
+                            <td data-label="Disponibles"><?php echo intval($producto['disponibles']); ?></td>
+                            <td data-label="Categoría"><?php echo htmlspecialchars($producto['categoria']); ?></td>
+                            <td data-label="Imagen">
                                 <img src="../../public/uploads/<?php echo htmlspecialchars($producto['imagen']); ?>" alt="Imagen" width="80" />
                             </td>
-                            <td>
-                                <a href="../controllers/ProductoController.php?action=editar&id=<?php echo $producto['id_producto']; ?>" class="btn-edit">Editar</a>
-                                <a href="../controllers/ProductoController.php?action=eliminar&id=<?php echo $producto['id_producto']; ?>" class="btn-delete" onclick="return confirm('¿Está seguro de eliminar este producto?');">Eliminar</a>
+                            <td data-label="Acciones">
+                                <a href="..." class="btn-edit">Editar</a>
+                                <a href="..." class="btn-delete">Eliminar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -74,4 +74,5 @@ $user = $_SESSION['usuario'];
         <a href="../views/perfil.php" class="btn-secondary">Volver al Perfil</a>
     </div>
 </body>
+
 </html>

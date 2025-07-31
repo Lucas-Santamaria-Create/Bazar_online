@@ -28,7 +28,7 @@
             <h1>Bienvenido a Bazar Online</h1>
             <p>Encuentra los mejores productos al mejor precio.</p>
             <?php if (!isLoggedIn()): ?>
-                <a href="app/views/login.php" class="btn-primary">Registrarse</a> <?php endif; ?>
+                <a href="app/views/registro.php" class="btn-primary">Registrarse</a> <?php endif; ?>
         </section>
 
         <!-- Barra de búsqueda -->

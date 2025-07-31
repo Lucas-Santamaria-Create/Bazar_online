@@ -18,13 +18,14 @@ $reservas = $reservaModel->obtenerReservasPorUsuario($user['id_usuario']);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Mis Reservas</title>
-    <link rel="stylesheet" href="../../public/css/style.css" />
+    <link rel="stylesheet" href="../../public/css/mis_reservas.css" />
 </head>
 
 <body>
     <div class="reservations-container">
         <h2>Mis Reservas</h2>
         <?php if (!empty($reservas)): ?>
+            <div class="table-wrapper">
             <table class="reservation-table">
                 <thead>
                     <tr>
@@ -62,12 +63,12 @@ $reservas = $reservaModel->obtenerReservasPorUsuario($user['id_usuario']);
                                         <button type="submit" class="btn-delete" onclick="return confirm('¿Estás seguro de eliminar esta reserva? Esta acción no se puede deshacer.')">Eliminar</button>
                                     </form>
                                 <?php endif; ?>
-
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            </div>
         <?php else: ?>
             <p>No tienes reservas.</p>
         <?php endif; ?>

@@ -1,0 +1,140 @@
+/* Styles for reservations page */
+
+.reservations-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.reservations-container h2 {
+    text-align: center;
+    color: #343a40;
+    margin-bottom: 25px;
+}
+
+.reservation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.reservation-table th,
+.reservation-table td {
+    border: 1px solid #dee2e6;
+    padding: 12px 15px;
+    text-align: left;
+    color: #495057;
+}
+
+.reservation-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.reservation-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.btn-confirm,
+.btn-cancel,
+.btn-delete {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 5px;
+}
+
+.btn-confirm {
+    background-color: #28a745;
+}
+
+.btn-confirm:hover {
+    background-color: #218838;
+}
+
+.btn-cancel {
+    background-color: #dc3545;
+}
+
+.btn-cancel:hover {
+    background-color: #c82333;
+}
+
+.btn-delete {
+    background-color: #6c757d;
+}
+
+.btn-delete:hover {
+    background-color: #5a6268;
+}
+
+.reservations-container a {
+    display: inline-block;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.reservations-container a:hover {
+    text-decoration: underline;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+    .reservations-container {
+        padding: 10px;
+        margin: 20px 10px;
+    }
+
+    .reservation-table th,
+    .reservation-table td {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .btn-confirm,
+    .btn-cancel,
+    .btn-delete {
+        padding: 6px 10px;
+        font-size: 13px;
+        margin-bottom: 5px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .btn-confirm,
+    .btn-cancel,
+    .btn-delete:last-child {
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .reservations-container h2 {
+        font-size: 20px;
+    }
+
+    .reservation-table th,
+    .reservation-table td {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+
+    .reservations-container a {
+        font-size: 14px;
+    }
+}
+
+/* Contenedor para scroll horizontal en tablas */
+.table-wrapper {
+    overflow-x: auto;
+}
