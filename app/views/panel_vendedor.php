@@ -61,8 +61,8 @@ $user = $_SESSION['usuario'];
                                 <img src="../../public/uploads/<?php echo htmlspecialchars($producto['imagen']); ?>" alt="Imagen" width="80" />
                             </td>
                             <td data-label="Acciones">
-                                <a href="..." class="btn-edit">Editar</a>
-                                <a href="..." class="btn-delete">Eliminar</a>
+                                <a href="../controllers/ProductoController.php?action=editar&id=<?php echo $producto['id_producto']; ?>" class="btn-edit">Editar</a>
+                                <a href="../controllers/ProductoController.php?action=eliminar&id=<?php echo $producto['id_producto']; ?>" class="btn-delete" onclick="return confirm('¿Está seguro de eliminar este producto?');">Eliminar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

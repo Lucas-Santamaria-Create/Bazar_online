@@ -1,0 +1,80 @@
+Informe del Proyecto: Bazar Online
+
+1. Resumen del Proyecto:
+Bazar Online es una aplicación web tipo marketplace que permite a los usuarios registrarse, publicar productos, buscar y comprar productos de diferentes categorías. El sistema está desarrollado en PHP con una arquitectura MVC (Modelo-Vista-Controlador).
+
+2. Tecnologías Utilizadas:
+- Lenguaje: PHP
+- Base de datos: MySQL (acceso mediante PDO)
+- Frontend: HTML, CSS, JavaScript
+- Estructura MVC para separar lógica, datos y presentación
+
+3. Estructura del Proyecto:
+- app/
+  - controllers/: Controladores que gestionan la lógica de negocio y las solicitudes HTTP.
+  - models/: Modelos que representan las entidades y gestionan la interacción con la base de datos.
+  - views/: Vistas que contienen el código HTML y la presentación para el usuario.
+- public/: Archivos públicos accesibles, como CSS, imágenes, y scripts JS.
+- config.php: Archivo de configuración con rutas base.
+- index.php: Página principal y punto de entrada de la aplicación.
+
+4. Componentes Principales:
+
+4.1 Controladores:
+- ProductoController.php: Gestiona acciones relacionadas con productos (crear, editar, eliminar, listar, detalle). Controla la subida de imágenes y la validación de sesión.
+- ReservaController.php: (No analizado en detalle, pero presumiblemente gestiona reservas).
+- UsuarioController.php: (No analizado en detalle, pero gestiona usuarios).
+- PanelVendedorController.php: (No analizado en detalle, probablemente gestiona el panel del vendedor).
+
+4.2 Modelos:
+- Producto.php: Modelo que maneja operaciones CRUD para productos, incluyendo consultas con filtros y detalles con información del vendedor.
+- DB.php: Clase para la conexión a la base de datos mediante PDO.
+- Otros modelos: Usuario.php, Reserva.php, Calificacion.php, Favorito.php (no analizados en detalle).
+
+4.3 Vistas:
+- catalogo.php: Vista que muestra el catálogo de productos con filtros por nombre y categoría, mostrando imagen, precio, vendedor y disponibilidad.
+- perfil.php, panel_vendedor.php, producto_form.php, login.php, registro.php, entre otras, que conforman la interfaz de usuario para diferentes funcionalidades.
+
+5. Flujo y Funcionalidades Clave:
+- Los usuarios pueden registrarse e iniciar sesión.
+- Pueden buscar productos por nombre o categoría.
+- Los vendedores pueden publicar, editar y eliminar productos, con gestión de imágenes.
+- El catálogo muestra productos con detalles y permite ver información del vendedor.
+- El sistema controla el acceso a ciertas acciones mediante sesiones.
+
+6. Archivos y Recursos Notables:
+- public/css/: Contiene hojas de estilo para diferentes vistas.
+- public/uploads/: Carpeta para imágenes subidas por usuarios.
+- config.php: Define rutas base para facilitar la gestión de URLs y rutas físicas.
+- index.php: Página de bienvenida con barra de búsqueda y acceso a publicación de productos.
+
+7. Resumen:
+Bazar Online es un marketplace funcional con una estructura clara y modular. Utiliza PHP y MySQL para la lógica y almacenamiento, y HTML/CSS para la presentación. La aplicación permite la gestión completa de productos y usuarios, con un enfoque en la experiencia del vendedor y comprador.
+
+Este informe proporciona una visión general del proyecto, sus componentes y funcionalidades principales.
+
+8. Objetivo del Proyecto:
+El objetivo principal de Bazar Online es proporcionar una plataforma digital que facilite la compra y venta de productos entre usuarios, ofreciendo una experiencia intuitiva y segura tanto para compradores como para vendedores.
+
+9. Requisitos Técnicos:
+- Servidor web con soporte PHP.
+- Base de datos MySQL para almacenamiento de datos.
+- Navegador web moderno compatible con HTML5, CSS3 y JavaScript.
+- Soporte para sesiones y manejo de cookies para autenticación y personalización.
+- Capacidad para subir y almacenar imágenes de productos.
+
+10. Funcionalidades Implementadas:
+- Registro e inicio de sesión de usuarios.
+- Publicación, edición y eliminación de productos por parte de vendedores.
+- Búsqueda y filtrado de productos por nombre y categoría.
+- Visualización de detalles de productos y vendedores.
+- Gestión de reservas y compras.
+- Control de acceso mediante sesiones.
+
+11. Uso de Cookies y Sesiones:
+El sistema utiliza cookies y sesiones para mantener la autenticación de los usuarios, gestionar permisos de acceso y personalizar la experiencia de navegación. Las sesiones permiten controlar el estado del usuario durante su interacción con la plataforma, asegurando la seguridad y privacidad de los datos.
+
+12. Conclusiones:
+Bazar Online es una solución efectiva para la creación de un marketplace funcional, que integra tecnologías web modernas y una arquitectura clara. El proyecto cumple con los objetivos planteados, ofreciendo una plataforma robusta y escalable para la gestión de productos y usuarios.
+
+Fin del informe.

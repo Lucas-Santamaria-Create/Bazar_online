@@ -129,7 +129,7 @@ switch ($action) {
             }
         }
         $productoModel->eliminar($id_producto);
-        redirectWithMessage('../controllers/ProductoController.php?action=listar', 'success', 'Producto eliminado correctamente.');
+        redirectWithMessage('../controllers/PanelVendedorController.php?action=productos', 'success', 'Producto eliminado correctamente.');
         break;
 
     case 'catalogo':

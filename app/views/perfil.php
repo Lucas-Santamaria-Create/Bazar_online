@@ -56,11 +56,6 @@ if (isset($_SESSION['success'])) {
             <button type="submit" class="btn-primary">Guardar Cambios</button>
         </form>
 
-        <!-- Botón para eliminar cuenta -->
-        <h3>Eliminar Cuenta</h3>
-        <form method="POST" action="../controllers/UsuarioController.php?action=eliminar" onsubmit="return confirm('¿Estás seguro de eliminar tu cuenta? Esta acción no se puede deshacer.');">
-            <button type="submit" class="btn-danger">Eliminar Cuenta</button>
-        </form>
 
     <div class="actions">
         <?php if ($user['rol'] === 'vendedor'): ?>

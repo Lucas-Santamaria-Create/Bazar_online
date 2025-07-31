@@ -146,6 +146,6 @@ switch ($action) {
         break;
 
     default:
-        header('Location: ../views/perfil.php');
+        header('Location: ../views/Registro.php');
         exit();
 }
