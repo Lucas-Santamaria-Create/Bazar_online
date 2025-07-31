@@ -28,11 +28,11 @@ function redirectWithMessage($location, $type, $message)
 switch ($action) {
     case 'crear':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nombre = trim($_POST['nombre'] ?? '');
-            $descripcion = trim($_POST['descripcion'] ?? '');
+            $nombre = htmlspecialchars(trim($_POST['nombre'] ?? ''));
+            $descripcion = htmlspecialchars(trim($_POST['descripcion'] ?? ''));
             $precio = floatval($_POST['precio'] ?? 0);
             $disponibles = intval($_POST['disponibles'] ?? 0);
-            $categoria = trim($_POST['categoria'] ?? 'Otros');
+            $categoria = htmlspecialchars(trim($_POST['categoria'] ?? 'Otros'));
 
             // Subir imagen a uploads
             $imagen = 'default.jpg';
@@ -81,11 +81,11 @@ switch ($action) {
     case 'actualizar':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id_producto = intval($_POST['id_producto'] ?? 0);
-            $nombre = trim($_POST['nombre'] ?? '');
-            $descripcion = trim($_POST['descripcion'] ?? '');
+            $nombre = htmlspecialchars(trim($_POST['nombre'] ?? ''));
+            $descripcion = htmlspecialchars(trim($_POST['descripcion'] ?? ''));
             $precio = floatval($_POST['precio'] ?? 0);
             $disponibles = intval($_POST['disponibles'] ?? 0);
-            $categoria = trim($_POST['categoria'] ?? 'Otros');
+            $categoria = htmlspecialchars(trim($_POST['categoria'] ?? 'Otros'));
 
             $producto = $productoModel->obtenerPorId($id_producto);
             if (!$producto || $producto['id_usuario'] != $id_usuario) {

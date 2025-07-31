@@ -12,6 +12,7 @@ switch ($action) {
 
     case 'reservar':
         $idProducto = $_GET['id'] ?? null;
+        $idProducto = intval($idProducto);
 
         if (!$idProducto) {
             die('Producto no especificado');
@@ -46,6 +47,7 @@ switch ($action) {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id_producto = $_POST['id_producto'] ?? null;
+            $id_producto = intval($id_producto);
             $pago_adelantado = floatval($_POST['pago_adelantado'] ?? 0);
             $id_usuario = $_SESSION['usuario']['id_usuario'];
 
@@ -72,7 +74,8 @@ switch ($action) {
 
     case 'cancelar':
         $id_reserva = $_POST['id_reserva'] ?? $_GET['id'] ?? null;
-        if ($id_reserva === null) {
+        $id_reserva = intval($id_reserva);
+        if ($id_reserva === 0) {
             die('ID de reserva no especificado.');
         }
 
@@ -96,6 +99,7 @@ switch ($action) {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id_reserva = $_POST['id_reserva'] ?? null;
+            $id_reserva = intval($id_reserva);
             if ($id_reserva) {
                 $exito = $reservaModel->eliminar($id_reserva);
                 if ($exito) {
@@ -118,6 +122,9 @@ switch ($action) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id_reserva = $_POST['id_reserva'] ?? null;
             $nuevo_estado = $_POST['estado'] ?? null;
+
+            $id_reserva = intval($id_reserva);
+            $nuevo_estado = htmlspecialchars(trim($nuevo_estado ?? ''));
 
             if ($id_reserva && $nuevo_estado) {
                 $Reserva->actualizarEstado($id_reserva, $nuevo_estado);
