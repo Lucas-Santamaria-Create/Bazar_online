@@ -28,6 +28,7 @@ function getUserName()
                 <a href="\Bazar_online\app\views\login.php">Iniciar Sesión</a>
                 <a href="\Bazar_online\app\views\registro.php">Registrarse</a>
             <?php else: ?>
+                <a href="\Bazar_online\app\views\mis_reservas.php">Mis Reservas</a>
                 <a href="\Bazar_online\app\views\perfil.php">Perfil</a>
                 <a href="\Bazar_online\logout.php">Cerrar Sesión</a>
             <?php endif; ?>

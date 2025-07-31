@@ -8,6 +8,7 @@ if (!isset($productos)) {
 <head>
     <meta charset="UTF-8" />
     <title>Catálogo - Bazar Online</title>
+    <link rel="stylesheet" href="/bazar_online/public/css/catalogo.css" />
 </head>
 <body>
 <main>

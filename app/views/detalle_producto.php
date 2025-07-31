@@ -19,11 +19,14 @@
         <p><strong>Vendedor:</strong> <?= htmlspecialchars($producto['vendedor']) ?></p>
 
         <?php if (isset($_SESSION['usuario'])): ?>
-            <a href="../controllers/ReservaController.php?action=reservar&id=<?= (int)$producto['id_producto'] ?>" class="btn-reservar">Reservar</a>
-        <?php else: ?>
-            <p><em>Inicia sesión para poder reservar este producto.</em></p>
-        <?php endif; ?>
-
+    <?php if ((int)$producto['disponibles'] > 0): ?>
+        <a href="../controllers/ReservaController.php?action=reservar&id=<?= (int)$producto['id_producto'] ?>" class="btn-reservar">Reservar</a>
+    <?php else: ?>
+        <p><strong>Producto sin stock disponible.</strong></p>
+    <?php endif; ?>
+<?php else: ?>
+    <p><em>Inicia sesión para poder reservar este producto.</em></p>
+<?php endif; ?>
         <a href="../controllers/ProductoController.php?action=catalogo">← Volver al catálogo</a>
     </main>
 </body>

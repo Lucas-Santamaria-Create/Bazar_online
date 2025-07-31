@@ -28,21 +28,27 @@
             <h1>Bienvenido a Bazar Online</h1>
             <p>Encuentra los mejores productos al mejor precio.</p>
             <?php if (!isLoggedIn()): ?>
-                <a href="registro.php" class="btn-primary">Registrarse</a>
-            <?php endif; ?>
+                <a href="app/views/login.php" class="btn-primary">Registrarse</a> <?php endif; ?>
         </section>
 
         <!-- Barra de búsqueda -->
         <section class="search-bar">
-            <form method="GET" action="catalogo.php">
-                <input type="text" name="buscar" placeholder="Buscar por nombre..." required />
-                <button type="submit">Buscar</button>
+            <form id="filtroForm" method="get" action="app/controllers/ProductoController.php">
+                <input type="hidden" name="action" value="catalogo" />
+
+                <input type="text" name="buscar" placeholder="Buscar por nombre..."
+                    value="<?= htmlspecialchars($_GET['buscar'] ?? '') ?>"
+                    onkeydown="if(event.key === 'Enter'){ this.form.submit(); }" />
+
+                <button type="submit" name="buscarBtn">Buscar</button>
             </form>
+
+
         </section>
 
         <?php if (isLoggedIn()): ?>
             <div class="publicar-container">
-                <a href="publicar_producto.php" class="btn-primary">Publicar Producto</a>
+                <a href="app\views\perfil.php" class="btn-primary">Publicar Producto</a>
             </div>
         <?php endif; ?>
     </main>

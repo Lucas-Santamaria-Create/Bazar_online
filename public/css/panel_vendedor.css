@@ -1,114 +1,89 @@
-/* Estilos para el Panel de Vendedor */
+/* Styles for reservations page */
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    padding: 0;
-}
-
-.seller-panel-container {
-    max-width: 1000px;
+.reservations-container {
+    max-width: 900px;
     margin: 40px auto;
+    padding: 20px;
     background-color: #ffffff;
-    padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
 }
 
-.seller-panel-container h2 {
+.reservations-container h2 {
+    text-align: center;
     color: #343a40;
-    margin-bottom: 20px;
-    text-align: center;
+    margin-bottom: 25px;
 }
 
-.seller-panel-container p {
-    font-size: 16px;
-    color: #495057;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.btn-primary {
-    display: inline-block;
-    background-color: #007bff;
-    color: #ffffff;
-    padding: 10px 18px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    margin-bottom: 20px;
-    transition: background-color 0.3s ease;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-}
-
-.product-table {
+.reservation-table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
 
-.product-table th,
-.product-table td {
+.reservation-table th,
+.reservation-table td {
     border: 1px solid #dee2e6;
     padding: 12px 15px;
     text-align: left;
-    vertical-align: middle;
-}
-
-.product-table th {
-    background-color: #e9ecef;
     color: #495057;
 }
 
-.product-table tbody tr:nth-child(even) {
+.reservation-table th {
     background-color: #f8f9fa;
-}
-
-.btn-edit,
-.btn-delete {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 14px;
     font-weight: bold;
-    margin-right: 5px;
+}
+
+.reservation-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.btn-confirm,
+.btn-cancel,
+.btn-delete {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-right: 5px;
 }
 
-.btn-edit {
+.btn-confirm {
     background-color: #28a745;
-    color: #ffffff;
 }
 
-.btn-edit:hover {
-    background-color: #1e7e34;
+.btn-confirm:hover {
+    background-color: #218838;
+}
+
+.btn-cancel {
+    background-color: #dc3545;
+}
+
+.btn-cancel:hover {
+    background-color: #c82333;
 }
 
 .btn-delete {
-    background-color: #dc3545;
-    color: #ffffff;
+    background-color: #6c757d;
 }
 
 .btn-delete:hover {
-    background-color: #bd2130;
+    background-color: #5a6268;
 }
 
-.btn-secondary {
+.reservations-container a {
     display: inline-block;
-    background-color: #6c757d;
-    color: #ffffff;
-    padding: 10px 18px;
-    border-radius: 5px;
+    color: #007bff;
     text-decoration: none;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
 
-.btn-secondary:hover {
-    background-color: #5a6268;
+.reservations-container a:hover {
+    text-decoration: underline;
 }

@@ -32,6 +32,8 @@ class Producto {
         ]);
     }
 
+
+
     public function obtenerPorId($id_producto) {
         $sql = "SELECT * FROM productos WHERE id_producto = :id_producto";
         $stmt = $this->pdo->prepare($sql);
@@ -64,6 +66,15 @@ class Producto {
         $sql = "DELETE FROM productos WHERE id_producto = :id_producto";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([':id_producto' => $id_producto]);
+    }
+
+    public function actualizarDisponibilidad($id_producto, $nueva_cantidad) {
+        $sql = "UPDATE productos SET disponibles = :disponibles WHERE id_producto = :id_producto";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':disponibles' => $nueva_cantidad,
+            ':id_producto' => $id_producto
+        ]);
     }
 
     public function obtenerTodos($buscar = '', $categoria = '')

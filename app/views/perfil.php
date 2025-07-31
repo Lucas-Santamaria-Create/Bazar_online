@@ -1,11 +1,20 @@
 <?php
-// Header -->
+session_start(); // <-- Esto debe ir primero, siempre antes de usar $_SESSION
+
 include 'navbar.php'; 
+
 if (!isset($_SESSION['usuario'])) {
     header('Location: login.php');
     exit();
 }
 $user = $_SESSION['usuario'];
+
+$mensajeExito = '';
+if (isset($_SESSION['success'])) {
+    $mensajeExito = $_SESSION['success'];
+    unset($_SESSION['success']); // Limpiar para que no se repita
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -96,6 +105,19 @@ $user = $_SESSION['usuario'];
             });
             modal.style.display = 'none';
         }
+        
     </script>
+    <?php if (!empty($mensajeExito)): ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: '¡Éxito!',
+        text: '<?php echo $mensajeExito; ?>',
+        confirmButtonText: 'Aceptar'
+    });
+</script>
+<?php endif; ?>
+
 </body>
 </html>

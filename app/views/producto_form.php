@@ -30,7 +30,7 @@ $formAction = $isEdit ? '../controllers/ProductoController.php?action=actualizar
             <label for="descripcion">Descripción:</label>
             <textarea id="descripcion" name="descripcion" required><?php echo $isEdit ? htmlspecialchars($producto['descripcion']) : ''; ?></textarea>
 
-            <label for="precio">Precio (€):</label>
+            <label for="precio">Precio ($):</label>
             <input type="number" id="precio" name="precio" step="0.01" min="0" required value="<?php echo $isEdit ? htmlspecialchars($producto['precio']) : ''; ?>" />
 
             <label for="disponibles">Disponibles:</label>
@@ -56,6 +56,41 @@ $formAction = $isEdit ? '../controllers/ProductoController.php?action=actualizar
 
             <button type="submit"><?php echo $isEdit ? 'Actualizar' : 'Crear'; ?></button>
             <a href="../controllers/PanelVendedorController.php?action=productos" class="btn-secondary">Cancelar</a>
+        </form>
+        <div id="form-messages" style="color: red; margin-top: 10px;"></div>
+    </div>
+
+    <script>
+        // Client-side validation example
+        document.querySelector('form').addEventListener('submit', function(event) {
+            var nombre = document.getElementById('nombre').value.trim();
+            var descripcion = document.getElementById('descripcion').value.trim();
+            var precio = parseFloat(document.getElementById('precio').value);
+            var disponibles = parseInt(document.getElementById('disponibles').value);
+
+            var messages = [];
+
+            if (nombre.length < 3) {
+                messages.push('El nombre debe tener al menos 3 caracteres.');
+            }
+            if (descripcion.length < 10) {
+                messages.push('La descripción debe tener al menos 10 caracteres.');
+            }
+            if (isNaN(precio) || precio <= 0) {
+                messages.push('El precio debe ser un número positivo.');
+            }
+            if (isNaN(disponibles) || disponibles < 0) {
+                messages.push('La cantidad disponible no puede ser negativa.');
+            }
+
+            if (messages.length > 0) {
+                event.preventDefault();
+                document.getElementById('form-messages').innerHTML = messages.join('<br>');
+            }
+        });
+    </script>
+</body>
+</html>
         </form>
     </div>
 </body>

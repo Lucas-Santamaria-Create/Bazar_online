@@ -8,12 +8,14 @@ $user = $_SESSION['usuario'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Reservas Recibidas - Panel de Vendedor</title>
-    <link rel="stylesheet" href="../../public/css/panel_vendedor.css" />
+    <link rel="stylesheet" href="../../public/css/panel_vendedor.css?v=1" />
 </head>
+
 <body>
     <div class="seller-panel-container">
         <h2>Reservas Recibidas</h2>
@@ -33,24 +35,29 @@ $user = $_SESSION['usuario'];
                     <?php foreach ($reservas as $reserva): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($reserva['nombre_producto']); ?></td>
-                            <td><?php echo htmlspecialchars($reserva['nombre_comprador']); ?></td>
+                            <td><?php echo htmlspecialchars($reserva['email_comprador']); ?></td>
+                            <td><?= isset($reserva['nombre_comprador']) ? htmlspecialchars($reserva['nombre_comprador']) : 'N/A' ?></td>
                             <td><?php echo htmlspecialchars($reserva['fecha_reserva']); ?></td>
                             <td><?php echo htmlspecialchars($reserva['estado']); ?></td>
                             <td>
-                                <?php if ($reserva['estado'] === 'pendiente'): ?>
+                                    <?php if ($reserva['estado'] === 'pendiente'): ?>
                                     <form method="POST" action="../controllers/ReservaController.php?action=actualizar_estado" style="display:inline;">
                                         <input type="hidden" name="id_reserva" value="<?php echo $reserva['id_reserva']; ?>" />
                                         <input type="hidden" name="estado" value="confirmada" />
                                         <button type="submit" class="btn-confirm">Confirmar</button>
                                     </form>
-                                    <form method="POST" action="../controllers/ReservaController.php?action=actualizar_estado" style="display:inline;">
+                                    <form method="POST" action="../controllers/ReservaController.php?action=cancelar" style="display:inline;">
                                         <input type="hidden" name="id_reserva" value="<?php echo $reserva['id_reserva']; ?>" />
-                                        <input type="hidden" name="estado" value="rechazada" />
-                                        <button type="submit" class="btn-reject">Rechazar</button>
+                                        <button type="submit" class="btn-cancel" onclick="return confirm('¿Estás seguro de cancelar esta reserva?')">Cancelar</button>
                                     </form>
                                 <?php else: ?>
                                     <span>No disponible</span>
+                                    <form method="POST" action="../controllers/ReservaController.php?action=eliminar" style="display:inline;">
+                                        <input type="hidden" name="id_reserva" value="<?php echo $reserva['id_reserva']; ?>" />
+                                        <button type="submit" class="btn-delete" onclick="return confirm('¿Estás seguro de eliminar esta reserva? Esta acción no se puede deshacer.')">Eliminar</button>
+                                    </form>
                                 <?php endif; ?>
+
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -62,4 +69,5 @@ $user = $_SESSION['usuario'];
         <a href="../controllers/PanelVendedorController.php?action=productos" class="btn-secondary">Volver al Panel de Vendedor</a>
     </div>
 </body>
+
 </html>
