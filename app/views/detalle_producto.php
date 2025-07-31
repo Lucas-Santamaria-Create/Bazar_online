@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Detalle del Producto</title>
+     <link rel="stylesheet" href="../../public/css/detalle_producto.css" />
 </head>
 <body>
     <?php include 'navbar.php'; ?>

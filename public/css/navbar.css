@@ -1,89 +1,100 @@
-/* Styles for reservations page */
+/* Reset básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-.reservations-container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+body {
     font-family: Arial, sans-serif;
+    padding-top: 70px; /* Deja espacio para el navbar fijo */
 }
 
-.reservations-container h2 {
-    text-align: center;
-    color: #343a40;
-    margin-bottom: 25px;
-}
-
-.reservation-table {
+/* Navbar */
+.header {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+    top: 0;
+    z-index: 1000;
 }
 
-.reservation-table th,
-.reservation-table td {
-    border: 1px solid #dee2e6;
-    padding: 12px 15px;
-    text-align: left;
-    color: #495057;
-}
-
-.reservation-table th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-}
-
-.reservation-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-.btn-confirm,
-.btn-cancel,
-.btn-delete {
-    padding: 8px 14px;
-    border: none;
-    border-radius: 5px;
+.nav {
+    background-color: #1e1e1e;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.logo {
+    font-size: 1.5rem;
     font-weight: bold;
+}
+
+/* Botón hamburguesa */
+.nav-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-right: 5px;
+    display: none;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
 }
 
-.btn-confirm {
-    background-color: #28a745;
+.nav-toggle:focus {
+    outline: none;
 }
 
-.btn-confirm:hover {
-    background-color: #218838;
+/* Enlaces de navegación */
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
 }
 
-.btn-cancel {
-    background-color: #dc3545;
-}
-
-.btn-cancel:hover {
-    background-color: #c82333;
-}
-
-.btn-delete {
-    background-color: #6c757d;
-}
-
-.btn-delete:hover {
-    background-color: #5a6268;
-}
-
-.reservations-container a {
-    display: inline-block;
-    color: #007bff;
+.nav-links a {
+    color: white;
     text-decoration: none;
-    font-weight: bold;
-    margin-top: 10px;
+    font-size: 1rem;
+    transition: color 0.3s;
 }
 
-.reservations-container a:hover {
-    text-decoration: underline;
+.nav-links a:hover {
+    color: #ff9900;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav {
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 1rem;
+        background-color: #1e1e1e;
+    }
+
+    .nav.nav-menu_visible .nav-links {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 0.8rem 1rem;
+        border-top: 1px solid #444;
+    }
 }

@@ -13,7 +13,7 @@ $user = $_SESSION['usuario'];
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Reservas Recibidas - Panel de Vendedor</title>
-    <link rel="stylesheet" href="../../public/css/panel_vendedor.css?v=1" />
+    <link rel="stylesheet" href="../../public/css/reserva_Vendedor.css" />
 </head>
 
 <body>
@@ -25,6 +25,7 @@ $user = $_SESSION['usuario'];
                 <thead>
                     <tr>
                         <th>Producto</th>
+                        <th>Correo</th>
                         <th>Nombre del Comprador</th>
                         <th>Fecha de Reserva</th>
                         <th>Estado</th>
@@ -34,13 +35,13 @@ $user = $_SESSION['usuario'];
                 <tbody>
                     <?php foreach ($reservas as $reserva): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($reserva['nombre_producto']); ?></td>
-                            <td><?php echo htmlspecialchars($reserva['email_comprador']); ?></td>
-                            <td><?= isset($reserva['nombre_comprador']) ? htmlspecialchars($reserva['nombre_comprador']) : 'N/A' ?></td>
-                            <td><?php echo htmlspecialchars($reserva['fecha_reserva']); ?></td>
-                            <td><?php echo htmlspecialchars($reserva['estado']); ?></td>
-                            <td>
-                                    <?php if ($reserva['estado'] === 'pendiente'): ?>
+                            <td data-label="Producto"><?php echo htmlspecialchars($reserva['nombre_producto']); ?></td>
+                            <td data-label="Correo"><?php echo htmlspecialchars($reserva['email_comprador']); ?></td>
+                            <td data-label="Nombre del Comprador"><?= isset($reserva['nombre_comprador']) ? htmlspecialchars($reserva['nombre_comprador']) : 'N/A' ?></td>
+                            <td data-label="Fecha de Reserva"><?php echo htmlspecialchars($reserva['fecha_reserva']); ?></td>
+                            <td data-label="Estado"><?php echo htmlspecialchars($reserva['estado']); ?></td>
+                            <td data-label="Acciones">
+                                <?php if ($reserva['estado'] === 'pendiente'): ?>
                                     <form method="POST" action="../controllers/ReservaController.php?action=actualizar_estado" style="display:inline;">
                                         <input type="hidden" name="id_reserva" value="<?php echo $reserva['id_reserva']; ?>" />
                                         <input type="hidden" name="estado" value="confirmada" />
@@ -57,7 +58,6 @@ $user = $_SESSION['usuario'];
                                         <button type="submit" class="btn-delete" onclick="return confirm('¿Estás seguro de eliminar esta reserva? Esta acción no se puede deshacer.')">Eliminar</button>
                                     </form>
                                 <?php endif; ?>
-
                             </td>
                         </tr>
                     <?php endforeach; ?>

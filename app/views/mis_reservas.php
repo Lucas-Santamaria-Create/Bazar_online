@@ -29,6 +29,7 @@ $reservas = $reservaModel->obtenerReservasPorUsuario($user['id_usuario']);
                 <thead>
                     <tr>
                         <th>Producto</th>
+                        <th>Correo</th>
                         <th>Fecha de Reserva</th>
                         <th>Estado</th>
                         <th>Pago Adelantado</th>

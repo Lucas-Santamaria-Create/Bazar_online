@@ -1,89 +1,165 @@
-/* Styles for reservations page */
+/* Styles for panel_vendedor.php view */
 
-.reservations-container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+body {
     font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
+    color: #333;
 }
 
-.reservations-container h2 {
+.seller-panel-container {
+    max-width: 1100px;
+    margin: 2rem auto 2rem auto;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-top: 90px;
+}
+
+h2 {
     text-align: center;
-    color: #343a40;
-    margin-bottom: 25px;
+    color: #2c3e50;
+    margin-bottom: 1rem;
 }
 
-.reservation-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+p {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: #555;
 }
 
-.reservation-table th,
-.reservation-table td {
-    border: 1px solid #dee2e6;
-    padding: 12px 15px;
-    text-align: left;
-    color: #495057;
-}
-
-.reservation-table th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-}
-
-.reservation-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-.btn-confirm,
-.btn-cancel,
-.btn-delete {
-    padding: 8px 14px;
-    border: none;
-    border-radius: 5px;
-    color: white;
+.btn-primary, .btn-secondary, .btn-edit, .btn-delete {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0.25rem 0.5rem 0.25rem 0;
+    border-radius: 4px;
+    text-decoration: none;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-right: 5px;
+    text-align: center;
 }
 
-.btn-confirm {
-    background-color: #28a745;
+.btn-primary {
+    background-color: #27ae60;
+    color: white;
+    border: none;
 }
 
-.btn-confirm:hover {
-    background-color: #218838;
+.btn-primary:hover {
+    background-color: #219150;
 }
 
-.btn-cancel {
-    background-color: #dc3545;
+.btn-secondary {
+    background-color: #2980b9;
+    color: white;
+    border: none;
 }
 
-.btn-cancel:hover {
-    background-color: #c82333;
+.btn-secondary:hover {
+    background-color: #1c5980;
+}
+
+.btn-edit {
+    background-color: #f39c12;
+    color: white;
+    border: none;
+}
+
+.btn-edit:hover {
+    background-color: #d78c0a;
 }
 
 .btn-delete {
-    background-color: #6c757d;
+    background-color: #c0392b;
+    color: white;
+    border: none;
 }
 
 .btn-delete:hover {
-    background-color: #5a6268;
+    background-color: #992d22;
 }
 
-.reservations-container a {
-    display: inline-block;
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 10px;
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
 }
 
-.reservations-container a:hover {
-    text-decoration: underline;
+.product-table th, .product-table td {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.product-table th {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.product-table img {
+    max-width: 80px;
+    height: auto;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .seller-panel-container, main {
+        margin-top: 140px; /* Igual que el padding-top en body para móvil */
+        padding: 1rem; /* opcional, para separar contenido */
+    }
+     .reservation-table {
+        width: 100%;
+        border-collapse: collapse;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap; /* para evitar que se parta el contenido */
+        margin-top: 10px;
+        position: relative;
+        z-index: 1; /* que quede por debajo del navbar */
+    }
+
+    .product-table, .product-table thead, .product-table tbody, .product-table th, .product-table td, .product-table tr {
+        display: block;
+        width: 100%;
+    }
+
+    .product-table thead tr {
+        display: none;
+    }
+
+    .product-table tr {
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 0.5rem;
+    }
+
+    .product-table td {
+        border: none;
+        padding: 0.5rem 0;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    .product-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 45%;
+        padding-left: 0.5rem;
+        font-weight: bold;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .btn-primary, .btn-secondary, .btn-edit, .btn-delete {
+        width: 100%;
+        margin: 0.25rem 0;
+    }
 }

@@ -4,6 +4,10 @@ if (isset($_SESSION['error'])) {
     $error = $_SESSION['error'];
     unset($_SESSION['error']);
 }
+if (isset($_SESSION['success'])) {
+    $success = $_SESSION['success'];
+    unset($_SESSION['success']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -20,6 +24,9 @@ if (isset($_SESSION['error'])) {
         <h2>Iniciar Sesión</h2>
         <?php if (!empty($error)): ?>
             <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
+        <?php endif; ?>
+        <?php if (!empty($success)): ?>
+            <div class="success-message"><?php echo htmlspecialchars($success); ?></div>
         <?php endif; ?>
         <form method="POST" action="../controllers/UsuarioController.php?action=login">
             <label for="email">Correo Electrónico:</label>

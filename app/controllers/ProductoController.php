@@ -133,26 +133,26 @@ switch ($action) {
         break;
 
     case 'catalogo':
-    $buscar = $_GET['buscar'] ?? '';
-    $categoria = $_GET['categoria'] ?? '';
-    $productos = $productoModel->obtenerTodos($buscar, $categoria);
-    include '../views/catalogo.php';
-    break;
-        
+        $buscar = $_GET['buscar'] ?? '';
+        $categoria = $_GET['categoria'] ?? '';
+        $productos = $productoModel->obtenerTodos($buscar, $categoria);
+        include '../views/catalogo.php';
+        break;
+
     case 'detalle':
-    if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-        die("Producto no válido.");
-    }
+        if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+            die("Producto no válido.");
+        }
 
-    $id_producto = (int)$_GET['id'];
-    $producto = $productoModel->obtenerDetalleConVendedor($id_producto);
+        $id_producto = (int)$_GET['id'];
+        $producto = $productoModel->obtenerDetalleConVendedor($id_producto);
 
-    if (!$producto) {
-        die("Producto no encontrado.");
-    }
+        if (!$producto) {
+            die("Producto no encontrado.");
+        }
 
-    include '../views/detalle_producto.php';
-    break;
+        include '../views/detalle_producto.php';
+        break;
 
 
 
