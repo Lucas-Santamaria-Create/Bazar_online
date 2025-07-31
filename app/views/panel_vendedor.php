@@ -16,9 +16,26 @@ $user = $_SESSION['usuario'];
 </head>
 <body>
     <div class="seller-panel-container">
+        <?php if (isset($_SESSION['success'])): ?>
+            <div id="success-message" style="background-color: #d4edda; color: #155724; padding: 10px; margin-bottom: 15px; border: 1px solid #c3e6cb; border-radius: 4px;">
+                <?php
+                    echo htmlspecialchars($_SESSION['success']);
+                    unset($_SESSION['success']);
+                ?>
+            </div>
+            <script>
+                setTimeout(() => {
+                    const msg = document.getElementById('success-message');
+                    if (msg) {
+                        msg.style.display = 'none';
+                    }
+                }, 5000);
+            </script>
+        <?php endif; ?>
         <h2>Panel de Vendedor</h2>
         <p>Bienvenido, <?php echo htmlspecialchars($user['nombre']); ?>. Aquí puedes gestionar tus productos.</p>
         <a href="../controllers/ProductoController.php?action=crear" class="btn-primary">Crear Nuevo Producto</a>
+        <a href="../controllers/PanelVendedorController.php?action=reservas" class="btn-primary" style="margin-left: 10px;">Ver Reservas Recibidas</a>
         <?php if (!empty($productos)): ?>
             <table class="product-table">
                 <thead>

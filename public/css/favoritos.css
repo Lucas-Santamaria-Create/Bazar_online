@@ -1,0 +1,76 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.favoritos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.tarjeta {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 15px;
+    text-align: center;
+}
+
+.tarjeta img {
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.tarjeta h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #222;
+}
+
+.tarjeta p {
+    color: #1c8c34;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.tarjeta small {
+    color: #888;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.btn-quitar {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-quitar:hover {
+    background-color: #c0392b;
+}
+
+.volver {
+    display: block;
+    margin-top: 30px;
+    text-align: center;
+    text-decoration: none;
+    color: #3498db;
+}

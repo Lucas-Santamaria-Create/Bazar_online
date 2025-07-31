@@ -1,0 +1,82 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Contenedor principal */
+main {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* Título del producto */
+main h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #222;
+    text-align: center;
+}
+
+/* Imagen del producto */
+main img {
+    display: block;
+    margin: 0 auto 20px auto;
+    max-width: 100%;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+/* Texto de descripción y detalles */
+main p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+main p strong {
+    color: #555;
+}
+
+/* Botón de reservar */
+.btn-reservar {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    padding: 12px 20px;
+    margin: 20px 0;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-reservar:hover {
+    background-color: #218838;
+}
+
+/* Enlace de volver */
+main a[href*="catalogo"] {
+    display: inline-block;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+main a[href*="catalogo"]:hover {
+    text-decoration: underline;
+}
+
+/* Mensajes de stock o sesión */
+main em, main strong {
+    display: block;
+    margin-top: 20px;
+    font-size: 16px;
+}
