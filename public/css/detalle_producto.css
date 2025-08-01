@@ -62,6 +62,23 @@ main p strong {
     background-color: #218838;
 }
 
+.btn-favorito {
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-favorito:hover {
+    background-color: #e73370;
+}
 /* Enlace de volver */
 main a[href*="catalogo"] {
     display: inline-block;

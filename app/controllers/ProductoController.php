@@ -6,8 +6,8 @@ if (session_status() === PHP_SESSION_NONE) {
 // Incluir el modelo Producto para interactuar con la base de datos
 require_once '../models/Producto.php';
 
-// Obtener la acción a realizar desde la URL, por defecto 'listar'
-$action = $_GET['action'] ?? 'listar';
+// Obtener la acción a realizar desde la URL, por defecto 'catalogo'
+$action = $_GET['action'] ?? 'catalogo';
 // Crear instancia del modelo Producto
 $productoModel = new Producto();
 
@@ -179,9 +179,15 @@ switch ($action) {
             die("Producto no válido.");
         }
 
+        require_once '../models/Calificacion.php';
+        $calificacionModel = new Calificacion();
+
         // Obtener detalle del producto junto con información del vendedor
         $id_producto = (int)$_GET['id'];
         $producto = $productoModel->obtenerDetalleConVendedor($id_producto);
+
+        // Obtener calificaciones del producto
+        $calificaciones = $calificacionModel->obtenerPorProducto($id_producto);
 
         // Verificar que el producto exista
         if (!$producto) {

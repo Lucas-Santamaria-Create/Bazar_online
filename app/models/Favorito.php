@@ -3,7 +3,6 @@ require_once 'DB.php';
 
 class Favorito {
     private $pdo;
-
     public $id_favorito;
     public $id_usuario;
     public $id_producto;
@@ -20,6 +19,16 @@ class Favorito {
             ':id_usuario' => $id_usuario,
             ':id_producto' => $id_producto
         ]);
+    }
+
+    public function exists($id_usuario, $id_producto) {
+        $sql = "SELECT COUNT(*) FROM favoritos WHERE id_usuario = :id_usuario AND id_producto = :id_producto";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':id_usuario' => $id_usuario,
+            ':id_producto' => $id_producto
+        ]);
+        return $stmt->fetchColumn() > 0;
     }
 
     public function obtenerPorUsuario($id_usuario) {
