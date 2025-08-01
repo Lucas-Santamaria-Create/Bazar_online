@@ -33,9 +33,16 @@ if (isset($_SESSION['success'])) {
             <p><strong>Nombre:</strong> <?php echo htmlspecialchars($user['nombre']); ?></p>
             <p><strong>Correo Electrónico:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
             <p><strong>Rol:</strong> <?php echo htmlspecialchars($user['rol']); ?></p>
-            <?php if (isset($_COOKIE['last_login'])): ?>
-                <p><strong>Último inicio de sesión:</strong> <?php echo htmlspecialchars($_COOKIE['last_login']); ?></p>
-            <?php endif; ?>
+            <?php
+            if (isset($_COOKIE['last_login'])):
+                $lastLoginData = json_decode($_COOKIE['last_login'], true);
+                if ($lastLoginData && isset($lastLoginData['user_id'], $lastLoginData['last_login']) && $lastLoginData['user_id'] == $user['id_usuario']):
+            ?>
+                <p><strong>Último inicio de sesión:</strong> <?php echo htmlspecialchars($lastLoginData['last_login']); ?></p>
+            <?php
+                endif;
+            endif;
+            ?>
         </div>
 
         <!-- Formulario para editar datos -->

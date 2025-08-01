@@ -102,14 +102,8 @@ switch ($action) {
         // Cancelar la reserva
         $reservaModel->cancelarReserva($id_reserva);
 
-        // Redirección dinámica según el rol del usuario
-        if ($_SESSION['usuario']['rol'] === 'vendedor') {
-            header("Location: PanelVendedorController.php?action=reservas");
-            exit();
-        } else {
-            header("Location: PanelVendedorController.php?action=reservas");
-            exit();
-        }
+            header("Location: ../views/mis_reservas.php");
+         
         exit;
 
     case 'eliminar':
@@ -125,17 +119,7 @@ switch ($action) {
             $id_reserva = intval($id_reserva);
             if ($id_reserva) {
                 $exito = $reservaModel->eliminar($id_reserva);
-                if ($exito) {
-                    // Redirigir según rol del usuario
-                    if ($_SESSION['usuario']['rol'] === 'vendedor') {
-                        header("Location: PanelVendedorController.php?action=reservas");
-                    } else {
-                        header("Location: PanelVendedorController.php?action=reservas");
-                    }
-                    exit();
-                } else {
-                    die('Error al eliminar la reserva.');
-                }
+                header("Location: ../views/mis_reservas.php");
             } else {
                 die('Reserva no especificada.');
             }

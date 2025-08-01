@@ -1,19 +1,15 @@
 <?php
 include 'navbar.php';
-if (!isset($_SESSION['usuario'])) {
-    header('Location: login.php');
-    exit();
+
+include_once '../controllers/FavoritoController.php';
+function mostrarMensaje($tipo) {
+    if (isset($_SESSION[$tipo])) {
+        echo '<div class="mensaje">' . htmlspecialchars($_SESSION[$tipo]) . '</div>';
+        unset($_SESSION[$tipo]);
+    }
+    
 }
-$user = $_SESSION['usuario'];
 
-require_once '../models/Favorito.php';
-require_once '../models/Producto.php';
-
-$favoritoModel = new Favorito();
-$productoModel = new Producto();
-
-// Obtener favoritos del usuario
-$favoritos = $favoritoModel->obtenerPorUsuario($user['id_usuario']);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -30,9 +26,8 @@ $favoritos = $favoritoModel->obtenerPorUsuario($user['id_usuario']);
     <div class="favoritos-container">
         <h2>Mis Favoritos</h2>
         
-        <?php if (isset($_GET['mensaje'])): ?>
-            <div class="mensaje"><?= htmlspecialchars($_GET['mensaje']) ?></div>
-        <?php endif; ?>
+        <?php mostrarMensaje('success'); ?>
+        <?php mostrarMensaje('error'); ?>
 
         <?php if (!empty($favoritos)): ?>
             <table class="favoritos-table">
@@ -45,19 +40,16 @@ $favoritos = $favoritoModel->obtenerPorUsuario($user['id_usuario']);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($favoritos as $fav):
-                        $producto = $productoModel->obtenerPorId($fav['id_producto']);
-                        if (!$producto) continue;
-                    ?>
+                    <?php foreach ($favoritos as $item): ?>
                         <tr>
-                            <td><?= htmlspecialchars($producto['nombre']) ?></td>
+                            <td><?= htmlspecialchars($item['producto']['nombre']) ?></td>
                             <td>
-                                <img src="../../public/uploads/<?= htmlspecialchars($producto['imagen']) ?>" alt="Imagen de <?= htmlspecialchars($producto['nombre']) ?>" class="product-img" width="80" height="80">
+                                <img src="../../public/uploads/<?= htmlspecialchars($item['producto']['imagen']) ?>" alt="Imagen de <?= htmlspecialchars($item['producto']['nombre']) ?>" class="product-img" width="80" height="80">
                             </td>
-                            <td>$<?= number_format($producto['precio'], 2) ?></td>
+                            <td>$<?= number_format($item['producto']['precio'], 2) ?></td>
                             <td>
                                 <form method="POST" action="../controllers/FavoritoController.php?action=eliminar" style="display:inline;">
-                                    <input type="hidden" name="id_favorito" value="<?= htmlspecialchars($fav['id_favorito']) ?>" />
+                                    <input type="hidden" name="id_favorito" value="<?= htmlspecialchars($item['favorito']['id_favorito']) ?>" />
                                     <button type="submit" class="btn-remove" onclick="return confirm('¿Eliminar este favorito?')">Eliminar</button>
                                 </form>
                             </td>
@@ -68,6 +60,12 @@ $favoritos = $favoritoModel->obtenerPorUsuario($user['id_usuario']);
         <?php else: ?>
             <p>No tienes favoritos.</p>
         <?php endif; ?>
+
+        <a href="../controllers/ProductoController.php?action=catalogo" class="link-volver">← Volver al catálogo</a>
+    </div>
+</body>
+
+</html>
 
         <a href="../controllers/ProductoController.php?action=catalogo" class="link-volver">← Volver al catálogo</a>
     </div>

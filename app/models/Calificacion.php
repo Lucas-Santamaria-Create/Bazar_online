@@ -27,7 +27,11 @@ class Calificacion {
     }
 
     public function obtenerPorProducto($id_producto) {
-        $sql = "SELECT * FROM calificaciones WHERE id_producto = :id_producto";
+        $sql = "SELECT c.*, u.nombre AS nombre_usuario
+                FROM calificaciones c
+                LEFT JOIN usuarios u ON c.id_usuario = u.id_usuario
+                WHERE c.id_producto = :id_producto
+                ORDER BY c.fecha DESC";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':id_producto' => $id_producto]);
         return $stmt->fetchAll();
