@@ -1,11 +1,13 @@
 <?php
-session_start(); // Inicia la sesión para manejar variables globales de usuario
-require_once '../models/Usuario.php'; // Incluye el modelo Usuario para interactuar con la base de datos
+// Iniciar sesión para manejar variables globales de usuario
+session_start();
+// Incluir el modelo Usuario para interactuar con la base de datos
+require_once '../models/Usuario.php';
 
-// Obtiene el parámetro 'action' de la URL (login, registro, logout, etc.)
+// Obtener el parámetro 'action' de la URL (login, registro, logout, etc.)
 $action = $_GET['action'] ?? '';
 
-// Función para redirigir con un mensaje en la sesión (error o éxito)
+// Función auxiliar para redirigir con un mensaje en la sesión (error o éxito)
 function redirectWithMessage($location, $type, $message)
 {
     $_SESSION[$type] = $message;
@@ -17,37 +19,38 @@ function redirectWithMessage($location, $type, $message)
    LOGIN
    ============================ */
 if ($action === 'login') {
-    // Solo procesa si se envió el formulario por método POST
+    // Procesar solo si el formulario fue enviado por POST
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Sanitiza y recorta el correo y la contraseña ingresada
+        // Sanitizar y obtener email y contraseña
         $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
         $password = trim($_POST['password'] ?? '');
 
-        // Validación: campos vacíos
+        // Validar campos vacíos
         if (empty($email) || empty($password)) {
             redirectWithMessage('../views/login.php', 'error', 'Por favor, complete todos los campos.');
         }
 
-        // Validación: formato de correo
+        // Validar formato de email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             redirectWithMessage('../views/login.php', 'error', 'Correo electrónico no válido.');
         }
 
-        // Busca el usuario en la base de datos
+        // Buscar usuario en la base de datos
         $usuarioModel = new Usuario();
         $user = $usuarioModel->obtenerPorEmail($email);
 
-        // Verifica la contraseña usando el hash almacenado en la BD
+        // Verificar contraseña con hash almacenado
         if ($user && password_verify($password, $user['password'])) {
-            // Guarda los datos del usuario en la sesión
+            // Guardar datos del usuario en sesión
             $_SESSION['usuario'] = [
                 'id_usuario' => $user['id_usuario'],
                 'nombre' => htmlspecialchars($user['nombre'], ENT_QUOTES, 'UTF-8'),
                 'email' => $user['email'],
                 'rol' => $user['rol']
             ];
-      
-            header('Location: ../../index.php'); // Redirige al inicio
+
+            // Redirigir a la página principal
+            header('Location: ../../index.php');
             exit();
         } else {
             // Credenciales incorrectas
@@ -55,41 +58,43 @@ if ($action === 'login') {
         }
     }
 
-    /* ============================
+/* ============================
    REGISTRO
    ============================ */
 } elseif ($action === 'registro') {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Sanitiza y valida los datos del formulario
+        // Sanitizar y validar datos del formulario
         $nombre = htmlspecialchars(trim($_POST['nombre'] ?? ''), ENT_QUOTES, 'UTF-8');
         $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
         $password = trim($_POST['password'] ?? '');
         $confirmar_password = trim($_POST['confirmar_password'] ?? '');
 
-        // Validaciones de campos
+        // Validar campos vacíos
         if (empty($nombre) || empty($email) || empty($password) || empty($confirmar_password)) {
             redirectWithMessage('../views/registro.php', 'error', 'Por favor, complete todos los campos.');
         }
 
+        // Validar formato de email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             redirectWithMessage('../views/registro.php', 'error', 'Correo electrónico no válido.');
         }
 
+        // Validar que las contraseñas coincidan
         if ($password !== $confirmar_password) {
             redirectWithMessage('../views/registro.php', 'error', 'Las contraseñas no coinciden.');
         }
 
         $usuarioModel = new Usuario();
 
-        // Verifica si el email ya está registrado
+        // Verificar si el email ya está registrado
         if ($usuarioModel->existeEmail($email)) {
             redirectWithMessage('../views/registro.php', 'error', 'El correo electrónico ya está registrado.');
         }
 
-        // Hashea la contraseña antes de guardarla en la BD
+        // Hashear la contraseña antes de guardar
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        // Intenta crear el usuario
+        // Intentar crear el usuario
         $registrado = $usuarioModel->crear($nombre, $email, $hashedPassword);
 
         if ($registrado) {
@@ -98,22 +103,22 @@ if ($action === 'login') {
             redirectWithMessage('../views/registro.php', 'error', 'Error al registrar el usuario. Intente nuevamente.');
         }
     } else {
-        // Si se accede sin POST, redirige al registro
+        // Redirigir a registro si no es POST
         header('Location: ../views/registro.php');
         exit();
     }
 
-    /* ============================
+/* ============================
    LOGOUT
    ============================ */
 } elseif ($action === 'logout') {
-    // Cierra la sesión
+    // Cerrar sesión
     session_unset();
     session_destroy();
     header('Location: ../views/login.php');
     exit();
 
-    /* ============================
+/* ============================
    CONVERTIR A VENDEDOR
    ============================ */
 } elseif ($action === 'convertirVendedor') {
@@ -121,7 +126,7 @@ if ($action === 'login') {
         $id_usuario = $_POST['id_usuario'] ?? null;
         $response = ['success' => false, 'message' => ''];
 
-        // Validación: ID de usuario requerido
+        // Validar que se proporcione ID de usuario
         if ($id_usuario === null) {
             $response['message'] = 'ID de usuario no proporcionado.';
             echo json_encode($response);
@@ -131,17 +136,18 @@ if ($action === 'login') {
         $usuarioModel = new Usuario();
         $user = $usuarioModel->obtenerPorId($id_usuario);
 
+        // Verificar que el usuario exista
         if (!$user) {
             $response['message'] = 'Usuario no encontrado.';
             echo json_encode($response);
             exit();
         }
 
-        // Cambia el rol del usuario a "vendedor"
+        // Cambiar rol a vendedor
         $updated = $usuarioModel->actualizarRol($id_usuario, 'vendedor');
 
         if ($updated) {
-            // Si es el usuario actual, también actualiza la sesión
+            // Actualizar sesión si es el usuario actual
             if (isset($_SESSION['usuario']) && $_SESSION['usuario']['id_usuario'] == $id_usuario) {
                 $_SESSION['usuario']['rol'] = 'vendedor';
             }
@@ -156,7 +162,7 @@ if ($action === 'login') {
     }
 
 /* ============================
-   DEFAULT (redirige al login)
+   EDICIÓN DE PERFIL
    ============================ */
 } elseif ($action === 'editar') {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -166,14 +172,17 @@ if ($action === 'login') {
         $password = trim($_POST['password'] ?? '');
         $confirm_password = trim($_POST['confirm_password'] ?? '');
 
+        // Validar campos obligatorios
         if (empty($nombre) || empty($email)) {
             redirectWithMessage('../views/perfil.php', 'error', 'Nombre y correo son obligatorios.');
         }
 
+        // Validar formato de email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             redirectWithMessage('../views/perfil.php', 'error', 'Correo electrónico no válido.');
         }
 
+        // Validar que las contraseñas coincidan
         if ($password !== $confirm_password) {
             redirectWithMessage('../views/perfil.php', 'error', 'Las contraseñas no coinciden.');
         }
@@ -186,7 +195,7 @@ if ($action === 'login') {
             redirectWithMessage('../views/perfil.php', 'error', 'El correo electrónico ya está registrado por otro usuario.');
         }
 
-        // Actualizar datos
+        // Actualizar datos con o sin contraseña
         if (!empty($password)) {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $actualizado = $usuarioModel->actualizarConPassword($id_usuario, $nombre, $email, $hashedPassword);
