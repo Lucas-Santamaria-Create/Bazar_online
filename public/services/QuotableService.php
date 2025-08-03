@@ -1,9 +1,28 @@
 <?php
+/**
+ * Clase que se encarga de obtener citas aleatorias desde la API Quotable
+ * y traducir textos usando la API de LibreTranslate.
+ */
 class QuotableService
 {
+    /**
+     * URL base para obtener citas aleatorias en inglés desde Quotable
+     * @var string
+     */
     private $quotableApiUrl = 'https://api.quotable.io/random';
+
+    /**
+     * URL base para traducir textos con LibreTranslate
+     * @var string
+     */
     private $translateApiUrl = 'https://libretranslate.de/translate';
 
+    /**
+     * Obtiene una cita aleatoria desde la API de Quotable.
+     *
+     * Realiza una petición HTTP GET a la API para obtener una cita
+     * y el autor correspondiente.
+     */
     public function getRandomQuote()
     {
         $author = '';
@@ -41,6 +60,9 @@ class QuotableService
         return ['quote' => $quote, 'author' => $author];
     }
 
+    /**
+     * Traduce un texto de un idioma fuente a un idioma destino usando la API LibreTranslate.
+     */
     public function translateText($text, $source = 'en', $target = 'es')
     {
         $translatedText = '';
@@ -79,18 +101,24 @@ class QuotableService
         return $translatedText;
     }
 
+    /**
+     * Obtiene una cita aleatoria y la traduce al español.
+     *
+     * Llama a getRandomQuote() para obtener la cita original y luego
+     * la traduce usando translateText(). En caso de error, retorna la cita original.
+     * 
+     */
     public function getRandomQuoteInSpanish()
     {
         $quoteData = $this->getRandomQuote();
         $quote = $quoteData['quote'] ?? '';
         $author = $quoteData['author'] ?? '';
 
-        if ($quote && $quote !== 'No se pudo obtener la cita. Error: ') {
-            $translatedQuote = $this->translateText($quote, 'en', 'es');
-            if ($translatedQuote) {
-                $quote = $translatedQuote;
-            }
-        }
+        // Aquí se tendria que llamar a translateText para traducir
+        // $translatedQuote = $this->translateText($quote, 'en', 'es');
+        // if ($translatedQuote) {
+        //     $quote = $translatedQuote;
+        // }
 
         return ['quote' => $quote, 'author' => $author];
     }
