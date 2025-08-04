@@ -1,8 +1,14 @@
 <?php
+/**
+ * Clase DB que implementa el patrón Singleton para la conexión a la base de datos.
+ */
 class DB {
     private static $instance = null;
     private $pdo;
 
+    /**
+     * Constructor privado que establece la conexión PDO a la base de datos.
+     */
     private function __construct() {
         $host = 'localhost';
         $db   = 'bazar_online';
@@ -24,6 +30,11 @@ class DB {
         }
     }
 
+    /**
+     * Obtiene la instancia única de la clase DB.
+     *
+     * @return DB Instancia de la clase DB.
+     */
     public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new DB();
@@ -31,6 +42,11 @@ class DB {
         return self::$instance;
     }
 
+    /**
+     * Obtiene la conexión PDO.
+     *
+     * @return PDO Conexión PDO a la base de datos.
+     */
     public function getConnection() {
         return $this->pdo;
     }
