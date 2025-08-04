@@ -7,13 +7,11 @@ class QuotableService
 {
     /**
      * URL base para obtener citas aleatorias en inglés desde Quotable
-     * @var string
      */
     private $quotableApiUrl = 'https://api.quotable.io/random';
 
     /**
      * URL base para traducir textos con LibreTranslate
-     * @var string
      */
     private $translateApiUrl = 'https://libretranslate.de/translate';
 
